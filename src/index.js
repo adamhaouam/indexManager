@@ -25,7 +25,7 @@ const lv3List = document.getElementById("lv3List");
 const dataSet = new DataSet();
 const lv1sample = new BasicListing("Lev1 sample");
 dataSet.addListing(lv1sample);
-const lv1sample2 = new BasicListing("Lv1 sample 2");
+const lv1sample2 = new BasicListing("Lv1 sample 2", true);
 dataSet.addListing(lv1sample2);
 const lv2sample1 = new BasicListing("Lv2 Sample 1");
 lv1sample.addListing(lv2sample1);
@@ -44,6 +44,8 @@ let selectedLvl2 = 0;
 let selectedLvl3 = 0;
 // function findFirstUndeletedLvl1() {
 // }
+
+let showDeleted = false;
 
 //Selected level, to know what last clicked item for edit/add is
 let selectedLvl = 0;
@@ -65,15 +67,19 @@ function updateDOM() {
 	} else {
 		for (const listing in dataSet.listings) {
 			const thisListing = dataSet.listings[listing];
-			const thisListingBox = createListing(thisListing);
-			if (listing == selectedLvl1) {
-                thisListingBox.classList.add("selected");
+            if (showDeleted || !thisListing.isDeleted) {
+                const thisListingBox = createListing(thisListing);
+                if (listing == selectedLvl1) {
+                    thisListingBox.classList.add("selected");
+                }
+                thisListingBox.addEventListener("click", function () {
+                    selectedLvl1 = listing;
+                    updateDOM();
+                });
+                lv1List.appendChild(thisListingBox);
             }
-            thisListingBox.addEventListener("click", function () {
-                selectedLvl1 = listing;
-                updateDOM();
-            });
-			lv1List.appendChild(thisListingBox);
+			
+            
 		}
 		//TODO add field for adding new project
 
@@ -90,15 +96,17 @@ function updateDOM() {
 			for (const listing in dataSet.listings[selectedLvl1].listings) {
 				const thisListing =
 					dataSet.listings[selectedLvl1].listings[listing];
-				const thisListingBox = createListing(thisListing);
-				if (listing == selectedLvl2) {
-                    thisListingBox.classList.add("selected");
-                }
-                thisListingBox.addEventListener("click", function () {
-                    selectedLvl2 = listing;
-                    updateDOM();
-                });
-				lv2List.appendChild(thisListingBox);
+                if (showDeleted || !thisListing.isDeleted) {
+                    const thisListingBox = createListing(thisListing);
+                    if (listing == selectedLvl2) {
+                        thisListingBox.classList.add("selected");
+                    }
+                    thisListingBox.addEventListener("click", function () {
+                        selectedLvl2 = listing;
+                        updateDOM();
+                    });
+                    lv2List.appendChild(thisListingBox);
+            }
 			}
 			//TODO add field for adding new project
 
@@ -119,16 +127,18 @@ function updateDOM() {
 					const thisListing =
 						dataSet.listings[selectedLvl1].listings[selectedLvl2]
 							.listings[listing];
-					const thisListingBox = createListing(thisListing);
-					if (listing == selectedLvl3) {
-                        thisListingBox.classList.add("selected");
-                        //TODO show extra details
+                    if (showDeleted || !thisListing.isDeleted) {
+                        const thisListingBox = createListing(thisListing);
+                        if (listing == selectedLvl3) {
+                            thisListingBox.classList.add("selected");
+                            //TODO show extra details
+                        }
+                        thisListingBox.addEventListener("click", function () {
+                            selectedLvl3 = listing;
+                            updateDOM();
+                        });
+                        lv3List.appendChild(thisListingBox);
                     }
-                    thisListingBox.addEventListener("click", function () {
-                        selectedLvl3 = listing;
-                        updateDOM();
-                    });
-					lv3List.appendChild(thisListingBox);
 				}
 				//TODO add field for adding new project
 			}
@@ -164,8 +174,12 @@ function createListing(listingItem) {
 	});
 
 	deleteIcon.addEventListener("click", function (event) {
-		console.log("Deleting", listingItem.name);
-		event.stopPropagation();
+		if (
+			confirm(`Are you sure you want to delete task ${listingItem.name}?`,)) {
+					listingItem.deleteThis();
+				}
+				event.stopPropagation();
+				updateDOM();
 	});
 
 	return listingBox;
