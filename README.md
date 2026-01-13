@@ -1,7 +1,6 @@
 # todolist
+
 The Odin Project: Todo List - Javascript Course
-
-
 
 TODO:
 Update getters instead of accessing object directly

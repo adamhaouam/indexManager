@@ -1,159 +1,167 @@
-
 :root {
-  line-height: 1.5;
+	line-height: 1.5;
 }
 
-h1, h2, h3, h4, h5, figure, p, ol, ul, body {
-  margin: 0;
+h1,
+h2,
+h3,
+h4,
+h5,
+figure,
+p,
+ol,
+ul,
+body {
+	margin: 0;
 }
 
-ol[role="list"], ul[role="list"] {
-  list-style: none;
-  padding-inline: 0;
+ol[role="list"],
+ul[role="list"] {
+	list-style: none;
+	padding-inline: 0;
 }
 
-h1, h2, h3, h4, h5 {
-  font-size: inherit;
-  font-weight: inherit;
+h1,
+h2,
+h3,
+h4,
+h5 {
+	font-size: inherit;
+	font-weight: inherit;
 }
 
 img {
-  display: block;
-  max-inline-size: 100%;
+	display: block;
+	max-inline-size: 100%;
 }
-
 
 .container {
-    height: 100vh;
-    display: grid;
-    grid-template: 180px 1fr / 200px 1fr;
+	height: 100vh;
+	display: grid;
+	grid-template: 180px 1fr / 200px 1fr;
 }
 
-
 body {
-    background-color: rebeccapurple;
-    display: flex;
-    flex-direction: column;
-    height: 100vh;
-    width: 100%;
-    align-items: center;
-    justify-content: space-between;
+	background-color: rebeccapurple;
+	display: flex;
+	flex-direction: column;
+	height: 100vh;
+	width: 100%;
+	align-items: center;
+	justify-content: space-between;
 }
 
 #content {
-  background-color: beige;
-  padding: 25px;
-  flex-grow: 1;
-  width: 100%;
-  display: grid;
-  grid-template-columns: 1fr 2fr;
-  grid-template-rows: 50px 1fr ;
+	background-color: beige;
+	padding: 25px;
+	flex-grow: 1;
+	width: 100%;
+	display: grid;
+	grid-template-columns: 1fr 1fr 2fr;
+	grid-template-rows: 50px 1fr;
 }
 
-header, footer {
-    background-color: chocolate;
-    padding: 5px;
-    width: 100%;
-    text-align: center;
+header,
+footer {
+	background-color: chocolate;
+	padding: 5px;
+	width: 100%;
+	text-align: center;
 }
 
-.projectEntry, .taskEntry {
-    padding: 5px;
-    margin: 5px;
-    background-color: lightgray;
-    border: solid 2px black;
-    border-radius: 5px;
-    display: flex;
-    justify-content: space-between;
+.listing {
+	padding: 5px;
+	margin: 5px;
+	background-color: lightgray;
+	border: solid 2px black;
+	border-radius: 5px;
+	display: flex;
+	justify-content: space-between;
 }
 
 .taskEntry {
-  flex-direction: column;
+	flex-direction: column;
 }
 
-.taskMain, .taskExt {
-  display: flex;
-  gap: 15px;
+.taskMain,
+.taskExt {
+	display: flex;
+	gap: 15px;
 }
 
-
-
-.projectEntry:hover, .taskEntry:hover {
-    border: 4px solid black;
-    cursor: pointer;
-
+.projectEntry:hover,
+.taskEntry:hover {
+	border: 4px solid black;
+	cursor: pointer;
 }
 
 .icons {
-    visibility: hidden;
-    display: flex;
-    gap: 10px;
-    margin-left: auto;
+	visibility: hidden;
+	display: flex;
+	gap: 10px;
+	margin-left: auto;
 }
 
-.projectEntry:hover .icons, .taskEntry:hover .icons {
-    visibility: visible;
+.listing:hover .icons {
+	visibility: visible;
 }
 
-
-.newProjectEntry, .newTaskEntry {
-    padding: 5px;
-    margin: 5px;
-    background-color: lightgreen;
-    border: dotted 3px black;
-    border-radius: 5px;
-    text-align: center;
-    cursor: pointer;
+.newProjectEntry,
+.newTaskEntry {
+	padding: 5px;
+	margin: 5px;
+	background-color: lightgreen;
+	border: dotted 3px black;
+	border-radius: 5px;
+	text-align: center;
+	cursor: pointer;
 }
 
-#TaskMenu, #projectMenu {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  background-color: rgb(111, 134, 207);
-  padding: 30px;
+#TaskMenu,
+#projectMenu {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	background-color: rgb(111, 134, 207);
+	padding: 30px;
 }
 
-#TaskForm, #newProjectForm {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 10px;
+#TaskForm,
+#newProjectForm {
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+	gap: 10px;
 }
 
-
-#taskSubmit, #taskEdit, #projectSubmit, #projectEdit {
-  grid-column: span 2;
-  padding: 10px 30px;
-  justify-self: center;
+#taskSubmit,
+#taskEdit,
+#projectSubmit,
+#projectEdit {
+	grid-column: span 2;
+	padding: 10px 30px;
+	justify-self: center;
 }
 
 .selected {
-  background-color: rgb(97, 97, 255);
+	background-color: rgb(97, 97, 255);
 }
 
 * {
-  border: solid red 1px;
+	border: solid red 1px;
 }
 
 .taskDescBox {
-  font-size: 0.9em;
-  padding: 3px;
+	font-size: 0.9em;
+	padding: 3px;
+}
+
+.new {
+}
+
+.progress {
 }
 
 .done {
-  text-decoration: line-through;
-}
-
-
-.high {
-  background-color: red;
-}
-
-.medium {
-  background-color: orange;
-}
-
-.low {
-  background-color: green;
+	text-decoration: line-through;
 }

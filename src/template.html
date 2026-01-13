@@ -1,59 +1,92 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-    <header>
-        <h1>To Do List</h1>
-    </header>
-    <div id="content">
-        <div id="projectTitle">Projects</div>
-        <div id="TaskTitle">Tasks</div>
-        <div id="projectList">
-            <div class="projectEntry"><h3>Template Project Listing</h3><div class="icons"><span class="editIcon">Edit</span><span class="editIcon">Del</span></div></div>
-        </div>
-        <div id="TaskList">
-            <div class="taskEntry"><h3>Template Task Listing</h3><div class="icons"><span class="editIcon">Edit</span><span class="editIcon">Del</span></div></div>
-        </div>
-    </div>
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Document</title>
+	</head>
+	<body>
+		<header>
+			<h1>To Do List</h1>
+		</header>
+		<div id="content">
+			<div class="lv1Title">Level 1</div>
+			<div class="lv2Title">Level 2</div>
+			<div class="lv3Title">Level 3</div>
+			<div id="lv1List">
+				<div class="listing">
+					<h3>Template lv1 item</h3>
+					<div class="icons">
+						<span class="editIcon">Edit</span
+						><span class="editIcon">Del</span>
+					</div>
+				</div>
+			</div>
+			<div id="lv2List">
+				<div class="listing">
+					<h3>Template lv2 item</h3>
+					<div class="icons">
+						<span class="editIcon">Edit</span
+						><span class="editIcon">Del</span>
+					</div>
+				</div>
+			</div>
+			<div id="lv3List">
+				<div class="listing">
+					<h3>Template lv3 item</h3>
+					<div class="icons">
+						<span class="editIcon">Edit</span
+						><span class="editIcon">Del</span>
+					</div>
+				</div>
+			</div>
+		</div>
 
-    <dialog id="projectMenu">
-        <h2 id="projectFormTitle">New Project</h2>
-        <form id="projectForm">
-            <label for="projectName">Project Name:</label>
-            <input type="text" id="projectName" name="projectName" required>
-            <button id="projectSubmit" type="button">Create Project</button>
-            <button id="projectEdit" type="button">Save Project</button>
-        </form>
-    </dialog>
+		<dialog id="basicMenu">
+			<h2 id="basicMenuTitle">New Item (Level 1, 2)</h2>
+			<form id="basicMenuForm">
+				<label for="listingName">Listing Name:</label>
+				<input
+					type="text"
+					id="listingName"
+					name="listingName"
+					required
+				/>
+				<button id="basicSubmit" type="button">Create Listing</button>
+				<button id="basicEdit" type="button">Save Listing</button>
+			</form>
+		</dialog>
 
-    <dialog id="TaskMenu">
-        <h2 id="taskFormTitle">New Task</h2>
-        <form id="TaskForm">
-            <label for="taskName">Task Name:</label>
-            <input type="text" id="taskName" name="taskName" required>
-            <label for="taskDesc">Description:</label>
-            <textarea id="taskDesc" name="taskDesc"></textarea>
-            <label for="taskDueDate">Due Date:</label>
-            <input type="date" id="taskDueDate" name="taskDueDate">
-            <label for="taskPriority">Priority:</label>
-            <select id="taskPriority" name="taskPriority">
-                <option value="low">Low</option>
-                <option value="medium">Medium</option>
-                <option value="high">High</option>
-            </select>
-            <button id="taskSubmit" type="button">Create Task</button>
-            <button id="taskEdit" type="button">Edit Task</button>
-        </form>
-    </dialog>
-    
-    <footer>
-        <span>Created by Adam Haouam for <a href="https://www.theodinproject.com/lessons/node-path-javascript-todo-list">The Odin Project</a></span>
-        <span><a href="https://github.com/adamhaouam">GitHub Page</a></span> 
-    </footer>
-    
-</body>
+		<dialog id="advMenu">
+			<h2 id="advMenuTitle">New listing</h2>
+			<form id="advMenuForm">
+				<label for="listingName">Listing Name:</label>
+				<input
+					type="text"
+					id="listingName"
+					name="listingName"
+					required
+				/>
+				<label for="listingDesc">Description:</label>
+				<textarea id="listingDesc" name="listingDesc"></textarea>
+				<label for="listingStatus">Status:</label>
+				<select id="listingStatus" name="listingStatus">
+					<option value="new">New</option>
+					<option value="progress">In-progress</option>
+					<option value="done">Completed</option>
+				</select>
+			</form>
+		</dialog>
+
+		<footer>
+			<span
+				>Created by Adam Haouam for
+				<a
+					href="https://www.theodinproject.com/lessons/node-path-javascript-todo-list"
+					>The Odin Project</a
+				></span
+			>
+			<span><a href="https://github.com/adamhaouam">GitHub Page</a></span>
+		</footer>
+	</body>
 </html>

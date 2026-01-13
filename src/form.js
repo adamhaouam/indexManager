@@ -1,4 +1,3 @@
 export function addNewProject() {
-    const form = document.getElementById("menu");
-
-}    
+	const form = document.getElementById("menu");
+}
