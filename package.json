@@ -1,5 +1,5 @@
 {
-	"name": "indexManager",
+	"name": "index-manager",
 	"version": "1.0.0",
 	"description": "The Odin Project: Todo List - Javascript Course",
 	"main": "index.js",

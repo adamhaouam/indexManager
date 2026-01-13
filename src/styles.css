@@ -157,9 +157,11 @@ footer {
 }
 
 .new {
+  background-color: aliceblue;
 }
 
 .progress {
+  background-color: darksalmon;
 }
 
 .done {

@@ -25,12 +25,18 @@ const lv3List = document.getElementById("lv3List");
 const dataSet = new DataSet();
 const lv1sample = new BasicListing("Lev1 sample");
 dataSet.addListing(lv1sample);
+const lv1sample2 = new BasicListing("Lv1 sample 2");
+dataSet.addListing(lv1sample2);
+const lv2sample1 = new BasicListing("Lv2 Sample 1");
+lv1sample.addListing(lv2sample1);
 const lv2sample = new BasicListing("Lv2 Sample");
 lv1sample.addListing(lv2sample);
 const lv3sample = new AdvListing("Lv3 sample");
 lv2sample.addListing(lv3sample);
 const lv3sample2 = new AdvListing("lv3 sample 2");
 lv2sample.addListing(lv3sample2);
+const lv3sample3 = new AdvListing("lv3 sample 3");
+lv2sample1.addListing(lv3sample3);
 
 //get first undeleted
 let selectedLvl1 = 0;
@@ -47,7 +53,6 @@ function updateDOM() {
 	lv1List.replaceChildren();
 	lv2List.replaceChildren();
 	lv3List.replaceChildren();
-	console.log(lv1List);
 
 	if (
 		dataSet.listings.filter((listing) => listing.isDeleted == false)
@@ -61,7 +66,13 @@ function updateDOM() {
 		for (const listing in dataSet.listings) {
 			const thisListing = dataSet.listings[listing];
 			const thisListingBox = createListing(thisListing);
-			//TODO if selected listing, add selected class
+			if (listing == selectedLvl1) {
+                thisListingBox.classList.add("selected");
+            }
+            thisListingBox.addEventListener("click", function () {
+                selectedLvl1 = listing;
+                updateDOM();
+            });
 			lv1List.appendChild(thisListingBox);
 		}
 		//TODO add field for adding new project
@@ -80,7 +91,13 @@ function updateDOM() {
 				const thisListing =
 					dataSet.listings[selectedLvl1].listings[listing];
 				const thisListingBox = createListing(thisListing);
-				//if selected listing, add selected class
+				if (listing == selectedLvl2) {
+                    thisListingBox.classList.add("selected");
+                }
+                thisListingBox.addEventListener("click", function () {
+                    selectedLvl2 = listing;
+                    updateDOM();
+                });
 				lv2List.appendChild(thisListingBox);
 			}
 			//TODO add field for adding new project
@@ -103,7 +120,14 @@ function updateDOM() {
 						dataSet.listings[selectedLvl1].listings[selectedLvl2]
 							.listings[listing];
 					const thisListingBox = createListing(thisListing);
-					//TODO if selected listing, add selected class
+					if (listing == selectedLvl3) {
+                        thisListingBox.classList.add("selected");
+                        //TODO show extra details
+                    }
+                    thisListingBox.addEventListener("click", function () {
+                        selectedLvl3 = listing;
+                        updateDOM();
+                    });
 					lv3List.appendChild(thisListingBox);
 				}
 				//TODO add field for adding new project
@@ -111,6 +135,7 @@ function updateDOM() {
 		}
 	}
 }
+
 
 function createListing(listingItem) {
 	const listingBox = document.createElement("div");
@@ -130,9 +155,9 @@ function createListing(listingItem) {
 	iconsBox.appendChild(deleteIcon);
 	listingBox.appendChild(iconsBox);
 
-	listingBox.addEventListener("click", function () {
-		console.log(listingItem.name);
-	});
+	// listingBox.addEventListener("click", function () {
+	// 	console.log(listingItem.name);
+	// });
 
 	editIcon.addEventListener("click", function () {
 		console.log("Editing", listingItem.name);
@@ -147,6 +172,7 @@ function createListing(listingItem) {
 }
 
 updateDOM();
+
 
 // //Uses task form fields to run addNewProject(), closes form
 // projectSubmit.addEventListener("click", function() {
