@@ -1,5 +1,5 @@
 {
-	"name": "todolist",
+	"name": "indexManager",
 	"version": "1.0.0",
 	"description": "The Odin Project: Todo List - Javascript Course",
 	"main": "index.js",
@@ -10,15 +10,15 @@
 	},
 	"repository": {
 		"type": "git",
-		"url": "git+https://github.com/adamhaouam/todolist.git"
+		"url": "git+https://github.com/adamhaouam/indexManager.git"
 	},
 	"keywords": [],
 	"author": "",
 	"license": "ISC",
 	"bugs": {
-		"url": "https://github.com/adamhaouam/todolist/issues"
+		"url": "https://github.com/adamhaouam/indexManager/issues"
 	},
-	"homepage": "https://github.com/adamhaouam/todolist#readme",
+	"homepage": "https://github.com/adamhaouam/indexManager#readme",
 	"devDependencies": {
 		"@babel/core": "^7.28.5",
 		"@babel/preset-env": "^7.28.5",
