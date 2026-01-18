@@ -1,6 +1,35 @@
-import { Task, Project, ProjectList } from "./listData.js";
+import { BasicListing, AdvListing, DataSet } from "./listData.js";
+
 
 export function getLocalData() {
+	let restoredData;
+	if (storageAvailable("localStorage") && localStorage.dataSet) {
+		//create new array with objects
+		console.log(localStorage.dataSet);
+		const rawData = JSON.parse(localStorage.dataSet);
+		console.log(rawData);
+		restoredData = new DataSet();
+		for (const listing in rawData.listings) {
+			const thisListing = rawData.listings[listing];
+			const lvl1Listing = new BasicListing(thisListing.name, thisListing.isDeleted);
+			restoredData.addListing(lvl1Listing);
+			//TODO: add conversion for 2nd and 3rd levels. Need to add "add listing" feature first to better test this
+		}
+	}
+	else {
+		restoredData = new DataSet();
+		const defaultListing = new BasicListing("Default Listing");
+		restoredData.addListing(defaultListing);
+	}
+	return restoredData;
+}
+
+export function setLocalData(dataSet) {
+	console.log(dataSet);
+	localStorage.dataSet = JSON.stringify(dataSet);
+}
+
+export function getLocalData1() {
 	let restoredProjectList;
 	if (storageAvailable("localStorage") && localStorage.projectList) {
 		const exportedProjectList = JSON.parse(localStorage.projectList);
@@ -48,10 +77,7 @@ export function getLocalData() {
 	return restoredProjectList;
 }
 
-export function setLocalData(projectList) {
-	console.log(projectList);
-	localStorage.projectList = JSON.stringify(projectList);
-}
+
 
 //Check if data is supported and available
 //Copied from mdn web storage api page

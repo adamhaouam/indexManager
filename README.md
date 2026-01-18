@@ -1,12 +1,7 @@
 # indexManager
 
-The Odin Project: Todo List - Javascript Course
+Index Manager
 
-TODO:
-Update getters instead of accessing object directly
-Add confirmation prompt for deleting items
-Make CSS not ugly
-Make a show deleted option (want to only hide deleted items)
-Add cancel to forms
-Add no date option
-Add form restrictions
+Site to manage items and their current progress
+Used both as a progress system and an file indexing system
+Generates a naming convention for naming files as well as a search function by copying said naming convention
