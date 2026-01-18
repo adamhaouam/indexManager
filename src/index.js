@@ -53,7 +53,7 @@ saveDataButton.addEventListener("click", function () {
 
 
 advSubmit.addEventListener("click", function () {
-    addNewAdvListing(advListingNameField.value);
+    addNewAdvListing(advListingNameField.value, advListingDescField.value, advListingStatusField.value);
     advMenu.close();
     updateDOM();
 });
@@ -89,11 +89,13 @@ function addNewBasicListing(name) {
         const newBasicListing = new BasicListing(name, dataSet.listings[selectedLvl1].listings.length);
         dataSet.listings[selectedLvl1].addListing(newBasicListing);
         selectedLvl2 = findLastUndeletedLvl2();
+        console.log("Selected lvl2:", selectedLvl2);
         selectedLvl3 = null;
     }
 }
 
 function addNewAdvListing(name, description, status) {
+    console.log(name, dataSet.listings[selectedLvl1].listings[selectedLvl2].listings.length, description, status)
     const newAdvListing = new AdvListing(name, dataSet.listings[selectedLvl1].listings[selectedLvl2].listings.length, description, status);
     dataSet.listings[selectedLvl1].listings[selectedLvl2].addListing(newAdvListing);
     selectedLvl3 = findLastUndeletedLvl3();
@@ -221,13 +223,12 @@ function updateDOM() {
 			noList.textContent = "List empty. Please add a new item.";
 			lv2List.appendChild(noList);
 		} else {
-            console.log(dataSet.listings[selectedLvl1].listings.length, "!!!!!!");
 			for (const listing in dataSet.listings[selectedLvl1].listings) {
 				const thisListing =
 					dataSet.listings[selectedLvl1].listings[listing];
 				if (showDeleted || !thisListing.isDeleted) {
 					const thisListingBox = createListing(thisListing, listing);
-					if (listing === selectedLvl2) {
+					if (listing == selectedLvl2) {
 						thisListingBox.classList.add("selected");
 					}
 					thisListingBox.addEventListener("click", function () {
@@ -238,12 +239,12 @@ function updateDOM() {
 					lv2List.appendChild(thisListingBox);
 				}
 			}
-            if (selectedLvl2) {
+            if (selectedLvl2 != null) {
                 if (
                     dataSet.listings[selectedLvl1].listings[
                         selectedLvl2
                     ].listings.filter((listing) => listing.isDeleted == false)
-                        .length === 0
+                        .length == 0
                 ) {
                     const noList = document.createElement("div");
                     noList.classList.add("listing");
