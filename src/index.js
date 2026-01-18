@@ -53,7 +53,7 @@ saveDataButton.addEventListener("click", function () {
 
 
 advSubmit.addEventListener("click", function () {
-    addNewAdvListing(advListingNameField.value, advListingDescField.value, advListingStatusField.value);
+    addNewAdvListing(advListingNameField.value);
     advMenu.close();
     updateDOM();
 });
@@ -78,14 +78,15 @@ advEdit.addEventListener("click", function () {
 });
 
 function addNewBasicListing(name) {
-    const newBasicListing = new BasicListing(name);
     if (selectedLevel == 1) {
+        const newBasicListing = new BasicListing(name, dataSet.listings.length);
         dataSet.addListing(newBasicListing);
         selectedLvl1 = findLastUndeletedLvl1();
         selectedLvl2 = null;
         selectedLvl3 = null;
     } 
     else {
+        const newBasicListing = new BasicListing(name, dataSet.listings[selectedLvl1].listings.length);
         dataSet.listings[selectedLvl1].addListing(newBasicListing);
         selectedLvl2 = findLastUndeletedLvl2();
         selectedLvl3 = null;
@@ -93,7 +94,7 @@ function addNewBasicListing(name) {
 }
 
 function addNewAdvListing(name, description, status) {
-    const newAdvListing = new AdvListing(name, description, status);
+    const newAdvListing = new AdvListing(name, dataSet.listings[selectedLvl1].listings[selectedLvl2].listings.length, description, status);
     dataSet.listings[selectedLvl1].listings[selectedLvl2].addListing(newAdvListing);
     selectedLvl3 = findLastUndeletedLvl3();
 }
@@ -195,7 +196,7 @@ function updateDOM() {
 		for (const listing in dataSet.listings) {
 			const thisListing = dataSet.listings[listing];
 			if (showDeleted || !thisListing.isDeleted) {
-				const thisListingBox = createListing(thisListing);
+				const thisListingBox = createListing(thisListing, listing);
 				if (listing == selectedLvl1) {
 					thisListingBox.classList.add("selected");
 				}
@@ -224,9 +225,8 @@ function updateDOM() {
 			for (const listing in dataSet.listings[selectedLvl1].listings) {
 				const thisListing =
 					dataSet.listings[selectedLvl1].listings[listing];
-                console.log(listing, thisListing);
 				if (showDeleted || !thisListing.isDeleted) {
-					const thisListingBox = createListing(thisListing);
+					const thisListingBox = createListing(thisListing, listing);
 					if (listing === selectedLvl2) {
 						thisListingBox.classList.add("selected");
 					}
@@ -258,7 +258,7 @@ function updateDOM() {
                             dataSet.listings[selectedLvl1].listings[selectedLvl2]
                                 .listings[listing];
                         if (showDeleted || !thisListing.isDeleted) {
-                            const thisListingBox = createListing(thisListing);
+                            const thisListingBox = createListing(thisListing, listing);
                             if (listing == selectedLvl3) {
                                 thisListingBox.classList.add("selected");
                                 //TODO show extra details
@@ -280,15 +280,27 @@ function updateDOM() {
 
     lv1List.appendChild(createAddListingBox(1));
     console.log(selectedLvl1, selectedLvl2, selectedLvl3);
+    console.log(dataSet);
 }
 
-function createListing(listingItem) {
+function createListing(listingItem, indexNo) {
 	const listingBox = document.createElement("div");
 	listingBox.classList.add("listing");
     const mainInfo = document.createElement("div");
 	const listingTitle = document.createElement("h3");
 	listingTitle.textContent = listingItem.name;
 	mainInfo.appendChild(listingTitle);
+
+    const index = document.createElement("span");
+    
+    // if (indexNo.length == 1) {
+    //     indexNo = "0" + indexNo;
+    // }
+
+    index.textContent = listingItem.index;
+    index.classList.add("index");
+    mainInfo.appendChild(index);
+    
 	const iconsBox = document.createElement("div");
 	iconsBox.classList.add("icons");
 	const editIcon = document.createElement("span");

@@ -82,6 +82,13 @@ footer {
 	justify-content: space-between;
 }
 
+.index {
+	margin-left: 10px;
+	font-size: 0.7rem;
+	display: flex;
+	align-items: center;
+}
+
 .addListing {
 	background-color: green;
 }
@@ -148,9 +155,7 @@ footer {
 	background-color: rgb(97, 97, 255);
 }
 
-* {
-	border: solid red 1px;
-}
+
 
 .taskDescBox {
 	font-size: 0.9em;

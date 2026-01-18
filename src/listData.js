@@ -1,18 +1,28 @@
 class Listing {
-	constructor(name, isDeleted = false) {
-		this.name = name;
-		this.isDeleted = isDeleted;
-	}
+    constructor(name, index, isDeleted = false) {
+        this.name = name;
+        this.isDeleted = isDeleted;
+        this.index = this.formatIndex(index);
+    }
 
-	deleteThis() {
-		console.log("Deleting entry: " + this.name);
-		this.isDeleted = true;
-	}
+    formatIndex(index) {
+        const indexStr = String(index);
+        return indexStr.length === 1 ? "0" + indexStr : indexStr;
+    }
+
+    getIndex() {
+        return this.index;
+    }
+
+    deleteThis() {
+        console.log("Deleting entry: " + this.name);
+        this.isDeleted = true;
+    }
 }
 
 class BasicListing extends Listing {
-	constructor(name, isDeleted = false, listings = []) {
-		super(name, isDeleted);
+	constructor(name, index, isDeleted = false, listings = []) {
+		super(name, index, isDeleted);
 		this.listings = listings;
 	}
 
@@ -25,8 +35,8 @@ class BasicListing extends Listing {
 }
 
 class AdvListing extends Listing {
-	constructor(name, desc, status, isDeleted = false) {
-		super(name, isDeleted);
+	constructor(name, index, desc, status, isDeleted = false) {
+		super(name, index, isDeleted);
 		this.desc = desc;
 		this.status = status;
 	}

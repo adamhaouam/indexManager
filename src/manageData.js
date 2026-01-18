@@ -10,15 +10,15 @@ export function getLocalData() {
 		restoredData = new DataSet();
 		for (const lvl1Index in rawData.listings) {
 			const thisRawLvl1Listing = rawData.listings[lvl1Index];
-			const newLvl1Listing = new BasicListing(thisRawLvl1Listing.name, thisRawLvl1Listing.isDeleted);
+			const newLvl1Listing = new BasicListing(thisRawLvl1Listing.name, String(thisRawLvl1Listing.index), thisRawLvl1Listing.isDeleted);
 			restoredData.addListing(newLvl1Listing);
 			for (const lvl2Index in thisRawLvl1Listing.listings) {
 				const thisRawLvl2Listing = thisRawLvl1Listing.listings[lvl2Index];
-				const newLvl2Listing = new BasicListing(thisRawLvl2Listing.name, thisRawLvl2Listing.isDeleted);
+				const newLvl2Listing = new BasicListing(thisRawLvl2Listing.name, String(thisRawLvl2Listing.index), thisRawLvl2Listing.isDeleted);
 				newLvl1Listing.addListing(newLvl2Listing);
 				for (const lvl3Index in thisRawLvl2Listing.listings) {
 					const thisRawLvl3Listing = thisRawLvl2Listing.listings[lvl3Index];
-					const newLvl3Listing = new AdvListing(thisRawLvl3Listing.name, thisRawLvl3Listing.desc, thisRawLvl3Listing.status, thisRawLvl3Listing.isDeleted);
+					const newLvl3Listing = new AdvListing(thisRawLvl3Listing.name, String(thisRawLvl3Listing.index), thisRawLvl3Listing.desc, thisRawLvl3Listing.status, thisRawLvl3Listing.isDeleted);
 					newLvl2Listing.addListing(newLvl3Listing);
 				}
 			}
@@ -27,7 +27,7 @@ export function getLocalData() {
 	}
 	else {
 		restoredData = new DataSet();
-		const defaultListing = new BasicListing("Default Listing");
+		const defaultListing = new BasicListing("Default Listing!", "0");
 		restoredData.addListing(defaultListing);
 	}
 	return restoredData;
