@@ -11,9 +11,9 @@ class Listing {
 }
 
 class BasicListing extends Listing {
-	constructor(name, isDeleted = false, listing = []) {
+	constructor(name, isDeleted = false, listings = []) {
 		super(name, isDeleted);
-		this.listings = listing;
+		this.listings = listings;
 	}
 
 	addListing(listing) {
