@@ -5,14 +5,18 @@ export function getLocalData() {
 	let restoredData;
 	if (storageAvailable("localStorage") && localStorage.dataSet) {
 		//create new array with objects
-		console.log(localStorage.dataSet);
+		// console.log(localStorage.dataSet);
 		const rawData = JSON.parse(localStorage.dataSet);
-		console.log(rawData);
 		restoredData = new DataSet();
-		for (const listing in rawData.listings) {
-			const thisListing = rawData.listings[listing];
-			const lvl1Listing = new BasicListing(thisListing.name, thisListing.isDeleted);
-			restoredData.addListing(lvl1Listing);
+		for (const lvl1Index in rawData.listings) {
+			const thisRawLvl1Listing = rawData.listings[lvl1Index];
+			const newLvl1Listing = new BasicListing(thisRawLvl1Listing.name, thisRawLvl1Listing.isDeleted);
+			restoredData.addListing(newLvl1Listing);
+			for (const lvl2Index in thisRawLvl1Listing.listings) {
+				const thisLvl2Listing = thisRawLvl1Listing.listings[lvl2Index];
+				const newLvl2Listing = new BasicListing(thisLvl2Listing.name, thisLvl2Listing.isDeleted);
+				newLvl1Listing.addListing(newLvl2Listing);
+			}
 			//TODO: add conversion for 2nd and 3rd levels. Need to add "add listing" feature first to better test this
 		}
 	}
