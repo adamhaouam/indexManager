@@ -13,9 +13,14 @@ export function getLocalData() {
 			const newLvl1Listing = new BasicListing(thisRawLvl1Listing.name, thisRawLvl1Listing.isDeleted);
 			restoredData.addListing(newLvl1Listing);
 			for (const lvl2Index in thisRawLvl1Listing.listings) {
-				const thisLvl2Listing = thisRawLvl1Listing.listings[lvl2Index];
-				const newLvl2Listing = new BasicListing(thisLvl2Listing.name, thisLvl2Listing.isDeleted);
+				const thisRawLvl2Listing = thisRawLvl1Listing.listings[lvl2Index];
+				const newLvl2Listing = new BasicListing(thisRawLvl2Listing.name, thisRawLvl2Listing.isDeleted);
 				newLvl1Listing.addListing(newLvl2Listing);
+				for (const lvl3Index in thisRawLvl2Listing.listings) {
+					const thisRawLvl3Listing = thisRawLvl2Listing.listings[lvl3Index];
+					const newLvl3Listing = new AdvListing(thisRawLvl3Listing.name, thisRawLvl3Listing.desc, thisRawLvl3Listing.status, thisRawLvl3Listing.isDeleted);
+					newLvl2Listing.addListing(newLvl3Listing);
+				}
 			}
 			//TODO: add conversion for 2nd and 3rd levels. Need to add "add listing" feature first to better test this
 		}
