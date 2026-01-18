@@ -69,13 +69,25 @@ basicSubmit.addEventListener("click", function () {
 
 function addNewBasicListing(name) {
     const newBasicListing = new BasicListing(name);
-    selectedLevel == 1  ? dataSet.addListing(newBasicListing)
-        : dataSet.listings[selectedLvl1].addListing(newBasicListing);
+    console.log(selectedLvl1, selectedLvl2, selectedLvl3);
+    if (selectedLevel == 1) {
+        dataSet.addListing(newBasicListing);
+        selectedLvl1 = findLastUndeletedLvl1();
+        selectedLvl2 = null;
+        selectedLvl3 = null;
+    } 
+    else {
+        dataSet.listings[selectedLvl1].addListing(newBasicListing);
+        selectedLvl2 = findLastUndeletedLvl2();
+        selectedLvl3 = null;
+    }
 }
 
 function addNewAdvListing(name, description, status) {
     const newAdvListing = new AdvListing(name, description, status);
-    dataSet.listings[selectedLvl].listings[selectedLvl2].addListing(newAdvListing);
+    console.log(selectedLvl1, selectedLvl2, selectedLvl3);
+    dataSet.listings[selectedLvl1].listings[selectedLvl2].addListing(newAdvListing);
+    selectedLvl3 = findLastUndeletedLvl3();
 }
 
 
@@ -104,6 +116,63 @@ let showDeleted = false;
 
 //Selected level, to know what last clicked item for edit/add is
 let selectedLvl = 0;
+
+
+
+function findFirstUndeletedLvl1() {
+    for (const listing in dataSet.listings) {
+        if (dataSet.listings[listing].isDeleted === false) {
+            return listing;
+        }
+    }
+    return null;
+}
+function findFirstUndeletedLvl2() {
+    const lvl1Listings = dataSet.listings[selectedLvl1].listings;
+    for (const listing in lvl1Listings) {
+        if (lvl1Listings[listing].isDeleted === false) {
+            return listing;
+        }
+    }
+    return null;
+}
+function findFirstUndeletedLvl3() {
+    const lvl2Listings = dataSet.listings[selectedLvl1].listings[selectedLvl2].listings;
+    for (const listing in lvl2Listings) {
+        if (lvl2Listings[listing].isDeleted === false) {
+            return listing;
+        }
+    }
+    return null;
+}
+
+function findLastUndeletedLvl1() {
+    for (let i = dataSet.listings.length - 1; i >= 0; i--) {
+        if (dataSet.listings[i].isDeleted === false) {
+            return i;
+        }
+    }
+    return null;
+}
+function findLastUndeletedLvl2() {
+    const lvl1Listings = dataSet.listings[selectedLvl1].listings;
+    for (let i = lvl1Listings.length - 1; i >= 0; i--) {
+        if (lvl1Listings[i].isDeleted === false) {
+            return i;
+        }
+    }
+    return null;
+}
+function findLastUndeletedLvl3() {
+    const lvl2Listings = dataSet.listings[selectedLvl1].listings[selectedLvl2].listings;
+    for (let i = lvl2Listings.length - 1; i >= 0; i--) {
+        if (lvl2Listings[i].isDeleted === false) {
+            return i;
+        }
+    }
+    return null;
+}
+
 
 function updateDOM() {
 	//Clear existing entries
