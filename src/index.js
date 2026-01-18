@@ -272,51 +272,15 @@ function updateDOM() {
                         }
                     }
                 }
-                //TODO add field for adding new project
-                const addLvl3ListingBox = document.createElement("div");
-                addLvl3ListingBox.classList.add("listing", "addListing");
-                addLvl3ListingBox.textContent = "Add new Task"; 
-                addLvl3ListingBox.addEventListener("click", function () {
-                    console.log("Add Task clicked");
-                    //Hide edit button, show save button, empty fields
-                    advSubmit.style.display = "block";
-                    advEdit.style.display = "none";
-                    advListingNameField.value = "";
-                    advListingDescField.value = "";
-                    advListingStatusField.value = "";
-                    advMenu.showModal();
-                });
-                lv3List.appendChild(addLvl3ListingBox);
+                lv3List.appendChild(createAddListingBox(3));
             }
     }
-        //TODO add field for adding new project
-        //TODO summarize into function?
-        const addLvl2ListingBox = document.createElement("div");
-        addLvl2ListingBox.classList.add("listing", "addListing");
-        addLvl2ListingBox.textContent = "Add new Task"; 
-        addLvl2ListingBox.addEventListener("click", function () {
-            console.log("Add Task clicked");
-            //Hide edit button, show save button, empty fields
-            basicSubmit.style.display = "block";
-            basicEdit.style.display = "none";
-            basicListingNameField.value = "";
-            basicMenu.showModal();
-        });
-        lv2List.appendChild(addLvl2ListingBox);
+        
+        lv2List.appendChild(createAddListingBox(2));
 	}
     //TODO add field for adding new project
-    const addLvl1ListingBox = document.createElement("div");
-    addLvl1ListingBox.classList.add("listing", "addListing");
-    addLvl1ListingBox.textContent = "Add new Task"; 
-    addLvl1ListingBox.addEventListener("click", function () {
-        console.log("Add Task clicked");
-        //Hide edit button, show save button, empty fields
-        basicSubmit.style.display = "block";
-        basicEdit.style.display = "none";
-        basicListingNameField.value = "";
-        basicMenu.showModal();
-    });
-    lv1List.appendChild(addLvl1ListingBox);
+    
+    lv1List.appendChild(createAddListingBox(1));
     console.log(selectedLvl1, selectedLvl2, selectedLvl3);
 }
 
@@ -343,12 +307,14 @@ function createListing(listingItem) {
             advListingNameField.value = listingItem.name;
             advListingDescField.value = listingItem.desc;
             advListingStatusField.value = listingItem.status;
+            advMenuTitle.textContent = "Edit Item";
             advEdit.style.display = "block";
             advSubmit.style.display = "none";
             advMenu.showModal();
         }
         else if (listingItem instanceof BasicListing) {
             basicListingNameField.value = listingItem.name;
+            basicMenuTitle.textContent = "Edit Item";
             basicSubmit.style.display = "none";
             basicEdit.style.display = "block";
             basicMenu.showModal();
@@ -378,6 +344,32 @@ function createListing(listingItem) {
 	});
 
 	return listingBox;
+}
+
+
+function createAddListingBox(level) {
+    const addListingBox = document.createElement("div");
+    addListingBox.classList.add("listing", "addListing");
+    addListingBox.textContent = "Add new Item"; 
+    addListingBox.addEventListener("click", function () {
+        console.log("Add Item clicked");
+        //Hide edit button, show save button, empty fields
+        if (level == 1 || level == 2) {
+            basicSubmit.style.display = "block";
+            basicEdit.style.display = "none";
+            basicListingNameField.value = "";
+            basicMenu.showModal();
+        }
+        else if (level == 3) {
+            advSubmit.style.display = "block";
+            advEdit.style.display = "none";
+            advListingNameField.value = "";
+            advListingDescField.value = "";
+            advListingStatusField.value = "";
+            advMenu.showModal();
+        }
+    });
+    return addListingBox;
 }
 
 updateDOM();
