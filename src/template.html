@@ -61,21 +61,23 @@
 		<dialog id="advMenu">
 			<h2 id="advMenuTitle">New listing</h2>
 			<form id="advMenuForm">
-				<label for="listingName">Listing Name:</label>
+				<label for="advListingName">Listing Name:</label>
 				<input
 					type="text"
-					id="listingName"
-					name="listingName"
+					id="advListingName"
+					name="advListingName"
 					required
 				/>
 				<label for="listingDesc">Description:</label>
-				<textarea id="listingDesc" name="listingDesc"></textarea>
-				<label for="listingStatus">Status:</label>
-				<select id="listingStatus" name="listingStatus">
+				<textarea id="advListingDesc" name="listingDesc"></textarea>
+				<label for="advListingStatus">Status:</label>
+				<select id="advListingStatus" name="listingStatus">
 					<option value="new">New</option>
 					<option value="progress">In-progress</option>
 					<option value="done">Completed</option>
 				</select>
+                <button id="advSubmit" type="button">Create Listing</button>
+				<button id="advEdit" type="button">Save Listing</button>
 			</form>
 		</dialog>
 

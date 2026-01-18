@@ -11,10 +11,12 @@ const basicListingNameField = document.getElementById("basicListingName");
 const basicSubmit = document.getElementById("basicSubmit");
 const basicEdit = document.getElementById("basicEdit");
 
-const advMenu = document.getElementById("advancedMenu");
+const advMenu = document.getElementById("advMenu");
 const advMenuTitle = document.getElementById("advancedMenuTitle");
 const advMenuForm = document.getElementById("advancedMenuForm");
 const advListingNameField = document.getElementById("advListingName");
+const advListingDescField = document.getElementById("advListingDesc");
+const advListingStatusField = document.getElementById("advListingStatus");
 const advSubmit = document.getElementById("advSubmit");
 const advEdit = document.getElementById("advEdit");
 
@@ -49,11 +51,18 @@ saveDataButton.addEventListener("click", function () {
     console.log("saved!", dataSet);
 });
 
+
+advSubmit.addEventListener("click", function () {
+    addNewAdvListing(advListingNameField.value, advListingDescField.value, advListingStatusField.value);
+    advMenu.close();
+    updateDOM();
+});
+
+
 basicSubmit.addEventListener("click", function () {
     console.log(basicListingNameField.value);
     addNewBasicListing(basicListingNameField.value);
     basicMenu.close();
-    console.log(dataSet);
     updateDOM();
 
 })
@@ -62,6 +71,11 @@ function addNewBasicListing(name) {
     const newBasicListing = new BasicListing(name);
     selectedLevel == 1  ? dataSet.addListing(newBasicListing)
         : dataSet.listings[selectedLvl1].addListing(newBasicListing);
+}
+
+function addNewAdvListing(name, description, status) {
+    const newAdvListing = new AdvListing(name, description, status);
+    dataSet.listings[selectedLvl].listings[selectedLvl2].addListing(newAdvListing);
 }
 
 
@@ -177,18 +191,17 @@ function updateDOM() {
 						lv3List.appendChild(thisListingBox);
 					}
 				}
-				//TODO add field for adding new project
-                //TODO add field for adding new project
-                const addLvl3ListingBox = document.createElement("div");
-                addLvl3ListingBox.classList.add("listing", "addListing");
-                addLvl3ListingBox.textContent = "Add new Task"; 
-                addLvl3ListingBox.addEventListener("click", function () {
-                    console.log("Add Task clicked");
-                    basicMenu.showModal();
-                });
-                lv3List.appendChild(addLvl3ListingBox);
 			}
-		}
+            //TODO add field for adding new project
+            const addLvl3ListingBox = document.createElement("div");
+            addLvl3ListingBox.classList.add("listing", "addListing");
+            addLvl3ListingBox.textContent = "Add new Task"; 
+            addLvl3ListingBox.addEventListener("click", function () {
+                console.log("Add Task clicked");
+                advMenu.showModal();
+            });
+            lv3List.appendChild(addLvl3ListingBox);
+    }
         //TODO add field for adding new project
         const addLvl2ListingBox = document.createElement("div");
         addLvl2ListingBox.classList.add("listing", "addListing");
