@@ -79,6 +79,23 @@ footer {
 	justify-content: space-between;
 }
 
+.addListing {
+	background-color: green;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 .taskEntry {
 	flex-direction: column;
 }
