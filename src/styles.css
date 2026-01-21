@@ -97,12 +97,6 @@ footer {
 	font-size: 0.9rem;
 }
 
-
-
-
-
-
-
 .icons {
 	visibility: hidden;
 	display: flex;
@@ -154,8 +148,6 @@ footer {
 .selected {
 	background-color: rgb(97, 97, 255);
 }
-
-
 
 .taskDescBox {
 	font-size: 0.9em;

@@ -1,23 +1,23 @@
 class Listing {
-    constructor(name, index, isDeleted = false) {
-        this.name = name;
-        this.isDeleted = isDeleted;
-        this.index = this.formatIndex(index);
-    }
+	constructor(name, index, isDeleted = false) {
+		this.name = name;
+		this.isDeleted = isDeleted;
+		this.index = this.formatIndex(index);
+	}
 
-    formatIndex(index) {
-        const indexStr = String(index);
-        return indexStr.length === 1 ? "0" + indexStr : indexStr;
-    }
+	formatIndex(index) {
+		const indexStr = String(index);
+		return indexStr.length === 1 ? "0" + indexStr : indexStr;
+	}
 
-    getIndex() {
-        return this.index;
-    }
+	getIndex() {
+		return this.index;
+	}
 
-    deleteThis() {
-        console.log("Deleting entry: " + this.name);
-        this.isDeleted = true;
-    }
+	deleteThis() {
+		console.log("Deleting entry: " + this.name);
+		this.isDeleted = true;
+	}
 }
 
 class BasicListing extends Listing {
