@@ -340,11 +340,23 @@ function createListing(listingItem) {
 	listingTitle.textContent = listingItem.name;
 	mainInfo.appendChild(listingTitle);
 
-	const index = document.createElement("span");
-
-
+	const index = document.createElement("button");
 	index.textContent = "#" + listingItem.index;
 	index.classList.add("index");
+    index.addEventListener("click", function (event) {
+        if (listingItem instanceof AdvListing) {
+            alert(`"${dataSet.listings[selectedLvl1].index}-${dataSet.listings[selectedLvl1].listings[selectedLvl2].index}-${listingItem.index}" copied to clipboard.`);
+            navigator.clipboard.writeText(`${dataSet.listings[selectedLvl1].index}-${dataSet.listings[selectedLvl1].listings[selectedLvl2].index}-${listingItem.index}`);
+        }
+        else if (selectedLevel == 1) {
+            alert(`"${listingItem.index}" has been copied to clipboard.`)
+            navigator.clipboard.writeText(listingItem.index);
+        }
+        else if (selectedLevel == 2) {
+            alert(`"${dataSet.listings[selectedLvl1].index}-${listingItem.index}" copied to clipboard.`);
+            navigator.clipboard.writeText(`${dataSet.listings[selectedLvl1].index}-${listingItem.index}`);
+        }
+    });
 	mainInfo.appendChild(index);
 
 	const iconsBox = document.createElement("div");
