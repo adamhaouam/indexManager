@@ -3,46 +3,54 @@
 	<head>
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-		<title>Document</title>
+		<title>Index Manager</title>
 	</head>
 	<body>
 		<header>
-			<h1>To Do List</h1>
+			<h1>Index Manager</h1>
 		</header>
 		<div id="content">
-			<div class="lv1Title">Level 1</div>
-			<div class="lv2Title">Level 2</div>
-			<div class="lv3Title">Level 3</div>
-			<div id="lv1List">
-				<div class="listing">
-					<h3>Template lv1 item</h3>
-					<div class="icons">
-						<span class="editIcon">Edit</span
-						><span class="editIcon">Del</span>
+			<div class="table">
+				<div class="lvlTitle">Level 1</div>
+				<div class="lvlTitle">Level 2</div>
+				<div class="lvlTitle">Level 3</div>
+				<div id="lv1List">
+					<div class="listing">
+						<h3>Template lv1 item</h3>
+						<div class="icons">
+							<span class="editIcon">Edit</span
+							><span class="editIcon">Del</span>
+						</div>
+					</div>
+				</div>
+				<div id="lv2List">
+					<div class="listing">
+						<h3>Template lv2 item</h3>
+						<div class="icons">
+							<span class="editIcon">Edit</span
+							><span class="editIcon">Del</span>
+						</div>
+					</div>
+				</div>
+				<div id="lv3List">
+					<div class="listing">
+						<h3>Template lv3 item</h3>
+						<div class="icons">
+							<span class="editIcon">Edit</span
+							><span class="editIcon">Del</span>
+						</div>
 					</div>
 				</div>
 			</div>
-			<div id="lv2List">
-				<div class="listing">
-					<h3>Template lv2 item</h3>
-					<div class="icons">
-						<span class="editIcon">Edit</span
-						><span class="editIcon">Del</span>
-					</div>
-				</div>
-			</div>
-			<div id="lv3List">
-				<div class="listing">
-					<h3>Template lv3 item</h3>
-					<div class="icons">
-						<span class="editIcon">Edit</span
-						><span class="editIcon">Del</span>
-					</div>
-				</div>
+			<div class="settings">
+				<h3>Settings (WIP):</h3>
+				<label for="searchBar">Search:</label>
+				<input type="text" id="searchBar" name="searchBar" />
+				<button id="saveData">Save Data</button>
+				<button id="showDeleted">Show Deleted</button>
+				<button id="downloadData">Download Data</button>
 			</div>
 		</div>
-        <button id="saveData">Save Data</button>
-
 		<dialog id="basicMenu">
 			<h2 id="basicMenuTitle">Create Item</h2>
 			<form id="basicMenuForm">
@@ -72,24 +80,25 @@
 				<textarea id="advListingDesc" name="listingDesc"></textarea>
 				<label for="advListingStatus">Status:</label>
 				<select id="advListingStatus" name="listingStatus">
-					<option value="new">New</option>
-					<option value="progress">In-progress</option>
-					<option value="done">Completed</option>
+					<option value="notStarted">Not Started</option>
+					<option value="inProgress">In progress</option>
+					<option value="draftCompleted">Draft Completed</option>
+					<option value="reviewed">Reviewed</option>
+					<option value="sentBack">Sent Back</option>
+					<option value="approved">Approved</option>
+					<option value="completed">Completed</option>
 				</select>
-                <button id="advSubmit" type="button">Create Listing</button>
+				<button id="advSubmit" type="button">Create Listing</button>
 				<button id="advEdit" type="button">Save Listing</button>
 			</form>
 		</dialog>
 
 		<footer>
 			<span
-				>Created by Adam Haouam for
-				<a
-					href="https://www.theodinproject.com/lessons/node-path-javascript-todo-list"
-					>The Odin Project</a
+				>Created by Adam Haouam -<a href="https://github.com/adamhaouam"
+					>GitHub Page</a
 				></span
 			>
-			<span><a href="https://github.com/adamhaouam">GitHub Page</a></span>
 		</footer>
 	</body>
 </html>

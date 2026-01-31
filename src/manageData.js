@@ -1,6 +1,5 @@
 import { BasicListing, AdvListing, DataSet } from "./listData.js";
 
-
 export function getLocalData() {
 	let restoredData;
 	if (storageAvailable("localStorage") && localStorage.dataSet) {
@@ -10,22 +9,37 @@ export function getLocalData() {
 		restoredData = new DataSet();
 		for (const lvl1Index in rawData.listings) {
 			const thisRawLvl1Listing = rawData.listings[lvl1Index];
-			const newLvl1Listing = new BasicListing(thisRawLvl1Listing.name, String(thisRawLvl1Listing.index), thisRawLvl1Listing.isDeleted);
+			const newLvl1Listing = new BasicListing(
+				thisRawLvl1Listing.name,
+				String(thisRawLvl1Listing.index),
+				thisRawLvl1Listing.isDeleted,
+			);
 			restoredData.addListing(newLvl1Listing);
 			for (const lvl2Index in thisRawLvl1Listing.listings) {
-				const thisRawLvl2Listing = thisRawLvl1Listing.listings[lvl2Index];
-				const newLvl2Listing = new BasicListing(thisRawLvl2Listing.name, String(thisRawLvl2Listing.index), thisRawLvl2Listing.isDeleted);
+				const thisRawLvl2Listing =
+					thisRawLvl1Listing.listings[lvl2Index];
+				const newLvl2Listing = new BasicListing(
+					thisRawLvl2Listing.name,
+					String(thisRawLvl2Listing.index),
+					thisRawLvl2Listing.isDeleted,
+				);
 				newLvl1Listing.addListing(newLvl2Listing);
 				for (const lvl3Index in thisRawLvl2Listing.listings) {
-					const thisRawLvl3Listing = thisRawLvl2Listing.listings[lvl3Index];
-					const newLvl3Listing = new AdvListing(thisRawLvl3Listing.name, String(thisRawLvl3Listing.index), thisRawLvl3Listing.desc, thisRawLvl3Listing.status, thisRawLvl3Listing.isDeleted);
+					const thisRawLvl3Listing =
+						thisRawLvl2Listing.listings[lvl3Index];
+					const newLvl3Listing = new AdvListing(
+						thisRawLvl3Listing.name,
+						String(thisRawLvl3Listing.index),
+						thisRawLvl3Listing.desc,
+						thisRawLvl3Listing.status,
+						thisRawLvl3Listing.isDeleted,
+					);
 					newLvl2Listing.addListing(newLvl3Listing);
 				}
 			}
 			//TODO: add conversion for 2nd and 3rd levels. Need to add "add listing" feature first to better test this
 		}
-	}
-	else {
+	} else {
 		restoredData = new DataSet();
 		const defaultListing = new BasicListing("Default Listing!", "0");
 		restoredData.addListing(defaultListing);
@@ -65,19 +79,6 @@ export function getLocalData1() {
 				restoredProject.addTask(restoredTask);
 			}
 		}
-
-		// console.log("Exporting test data");
-		// defaultProjectList = new ProjectList();
-		// const defaultProject = new Project("Default Project");
-		// defaultProjectList.addProject(defaultProject);
-		// const project2 = new Project("Project 2");
-		// defaultProjectList.addProject(project2);
-		// const defaultTask = new Task("Task 1", "Some info", "2026-01-21", "high");
-		// defaultProject.addTask(defaultTask);
-		// const task2 = new Task("Task 2", "Second Task", "", "medium");
-		// defaultProject.addTask(task2);
-		// const task3 = new Task("Task 3", "Third Task", "2026-05-21", "low");
-		// project2.addTask(task3);
 	} else {
 		restoredProjectList = new ProjectList();
 		const defaultProject = new Project("Default Project");
@@ -85,8 +86,6 @@ export function getLocalData1() {
 	}
 	return restoredProjectList;
 }
-
-
 
 //Check if data is supported and available
 //Copied from mdn web storage api page
@@ -106,5 +105,94 @@ function storageAvailable(type) {
 			storage &&
 			storage.length !== 0
 		);
+	}
+}
+
+let dataSet;
+const url = "https://api.jsonbin.io/v3/b/69701f4f43b1c97be93e0785";
+
+//if !masterkey variable use public api else use private api with master key
+
+//run after updating?
+export async function fetchData() {
+	try {
+		const response = await fetch(url + "/latest", {
+			method: "GET", // or "PATCH"
+			headers: {
+				Accept: "application/json",
+			},
+		});
+		if (!response.ok) {
+			throw new Error(`Response status: ${response.status}`);
+		}
+
+		const result = await response.json();
+		dataSet = result.record;
+		console.log("Receving: ", JSON.stringify(dataSet));
+		console.log("Inside fetchdata function", dataSet.listings[0].name);
+		return formatData(dataSet);
+		//return formatData(dataSet);
+	} catch (error) {
+		console.error(error.message);
+	}
+}
+
+function formatData(data) {
+	const rawData = data;
+	const restoredData = new DataSet();
+	for (const lvl1Index in rawData.listings) {
+		const thisRawLvl1Listing = rawData.listings[lvl1Index];
+		const newLvl1Listing = new BasicListing(
+			thisRawLvl1Listing.name,
+			String(thisRawLvl1Listing.index),
+			thisRawLvl1Listing.isDeleted,
+		);
+		restoredData.addListing(newLvl1Listing);
+		for (const lvl2Index in thisRawLvl1Listing.listings) {
+			const thisRawLvl2Listing = thisRawLvl1Listing.listings[lvl2Index];
+			const newLvl2Listing = new BasicListing(
+				thisRawLvl2Listing.name,
+				String(thisRawLvl2Listing.index),
+				thisRawLvl2Listing.isDeleted,
+			);
+			newLvl1Listing.addListing(newLvl2Listing);
+			for (const lvl3Index in thisRawLvl2Listing.listings) {
+				const thisRawLvl3Listing =
+					thisRawLvl2Listing.listings[lvl3Index];
+				const newLvl3Listing = new AdvListing(
+					thisRawLvl3Listing.name,
+					String(thisRawLvl3Listing.index),
+					thisRawLvl3Listing.desc,
+					thisRawLvl3Listing.status,
+					thisRawLvl3Listing.isDeleted,
+				);
+				newLvl2Listing.addListing(newLvl3Listing);
+			}
+		}
+	}
+	return restoredData;
+}
+
+export async function postJSON(data) {
+	try {
+		const response = await fetch(url, {
+			method: "PUT", // or "PATCH"
+			headers: {
+				Accept: "application/json",
+				"Content-Type": "application/json",
+			},
+			body: JSON.stringify(data),
+		});
+
+		if (!response.ok) {
+			throw new Error(`Response status: ${response.status}`);
+		}
+
+		//get updated data back
+		const result = await response.json();
+		dataSet = result.record;
+		return formatData(dataSet);
+	} catch (error) {
+		console.error(error.message);
 	}
 }
