@@ -2,7 +2,12 @@
 import "./styles.css";
 import "../node_modules/modern-normalize";
 import { BasicListing, AdvListing, DataSet } from "./listData.js";
-import { getLocalData, setLocalData, fetchData, postJSON } from "./manageData.js";
+import {
+	getLocalData,
+	setLocalData,
+	fetchData,
+	postJSON,
+} from "./manageData.js";
 
 const basicMenu = document.getElementById("basicMenu");
 const basicMenuTitle = document.getElementById("basicMenuTitle");
@@ -26,10 +31,8 @@ const lv1List = document.getElementById("lv1List");
 const lv2List = document.getElementById("lv2List");
 const lv3List = document.getElementById("lv3List");
 
-
 //TODO: implement show deleted toggle
 let showDeleted = false;
-
 
 ///Get data from local storage
 let dataSet = null;
@@ -41,21 +44,16 @@ let selectedLvl3 = null;
 
 let selectedLevel = 1;
 
-
-
 loadPage();
 
-
 async function loadPage() {
-    //dataSet = getLocalData();
-    dataSet = await fetchData();
-    console.log("Data has been imported! lets update dom", dataSet);
-    selectedLvl1 = findFirstUndeletedLvl1();
-    updateDOM();
-    console.log("DOM updated")
+	//dataSet = getLocalData();
+	dataSet = await fetchData();
+	console.log("Data has been imported! lets update dom", dataSet);
+	selectedLvl1 = findFirstUndeletedLvl1();
+	updateDOM();
+	console.log("DOM updated");
 }
-
-
 
 lv1List.addEventListener("click", function () {
 	selectedLevel = 1;
@@ -121,8 +119,8 @@ function addNewBasicListing(name) {
 		console.log("Selected lvl2:", selectedLvl2);
 		selectedLvl3 = null;
 	}
-    console.log("posting json", dataSet);
-    postJSON(dataSet);
+	console.log("posting json", dataSet);
+	postJSON(dataSet);
 }
 
 function addNewAdvListing(name, description, status) {
@@ -142,8 +140,8 @@ function addNewAdvListing(name, description, status) {
 		newAdvListing,
 	);
 	selectedLvl3 = findLastUndeletedLvl3();
-    console.log("posting json", dataSet);
-    postJSON(dataSet);
+	console.log("posting json", dataSet);
+	postJSON(dataSet);
 }
 
 function editBasicListing(newName) {
@@ -152,16 +150,16 @@ function editBasicListing(newName) {
 	} else if (selectedLevel == 2) {
 		dataSet.listings[selectedLvl1].listings[selectedLvl2].editName(newName);
 	}
-    console.log("posting json", dataSet);
-    postJSON(dataSet);
+	console.log("posting json", dataSet);
+	postJSON(dataSet);
 }
 
 function editAdvListing(newName, newDesc, newStatus) {
 	dataSet.listings[selectedLvl1].listings[selectedLvl2].listings[
 		selectedLvl3
 	].editTask(newName, newDesc, newStatus);
-    console.log("posting json", dataSet);
-    postJSON(dataSet);
+	console.log("posting json", dataSet);
+	postJSON(dataSet);
 }
 
 function findFirstUndeletedLvl1() {
@@ -343,20 +341,26 @@ function createListing(listingItem) {
 	const index = document.createElement("button");
 	index.textContent = "#" + listingItem.index;
 	index.classList.add("index");
-    index.addEventListener("click", function (event) {
-        if (listingItem instanceof AdvListing) {
-            alert(`"${dataSet.listings[selectedLvl1].index}-${dataSet.listings[selectedLvl1].listings[selectedLvl2].index}-${listingItem.index}" copied to clipboard.`);
-            navigator.clipboard.writeText(`${dataSet.listings[selectedLvl1].index}-${dataSet.listings[selectedLvl1].listings[selectedLvl2].index}-${listingItem.index}`);
-        }
-        else if (selectedLevel == 1) {
-            alert(`"${listingItem.index}" has been copied to clipboard.`)
-            navigator.clipboard.writeText(listingItem.index);
-        }
-        else if (selectedLevel == 2) {
-            alert(`"${dataSet.listings[selectedLvl1].index}-${listingItem.index}" copied to clipboard.`);
-            navigator.clipboard.writeText(`${dataSet.listings[selectedLvl1].index}-${listingItem.index}`);
-        }
-    });
+	index.addEventListener("click", function (event) {
+		if (listingItem instanceof AdvListing) {
+			alert(
+				`"${dataSet.listings[selectedLvl1].index}-${dataSet.listings[selectedLvl1].listings[selectedLvl2].index}-${listingItem.index}" copied to clipboard.`,
+			);
+			navigator.clipboard.writeText(
+				`${dataSet.listings[selectedLvl1].index}-${dataSet.listings[selectedLvl1].listings[selectedLvl2].index}-${listingItem.index}`,
+			);
+		} else if (selectedLevel == 1) {
+			alert(`"${listingItem.index}" has been copied to clipboard.`);
+			navigator.clipboard.writeText(listingItem.index);
+		} else if (selectedLevel == 2) {
+			alert(
+				`"${dataSet.listings[selectedLvl1].index}-${listingItem.index}" copied to clipboard.`,
+			);
+			navigator.clipboard.writeText(
+				`${dataSet.listings[selectedLvl1].index}-${listingItem.index}`,
+			);
+		}
+	});
 	mainInfo.appendChild(index);
 
 	const iconsBox = document.createElement("div");
@@ -375,13 +379,13 @@ function createListing(listingItem) {
 
 	if (listingItem instanceof AdvListing) {
 		const extraInfo = document.createElement("div");
-        extraInfo.classList.add("extraInfo");
+		extraInfo.classList.add("extraInfo");
 		const listingDesc = document.createElement("div");
 		listingDesc.textContent = listingItem.desc;
 		listingDesc.classList.add("description");
 		extraInfo.appendChild(listingDesc);
 		const listingStatus = document.createElement("p");
-        listingStatus.classList.add(listingItem.status);
+		listingStatus.classList.add(listingItem.status);
 		listingStatus.textContent = {
 			notStarted: "Not Started",
 			inProgress: "In Progress",
@@ -389,9 +393,10 @@ function createListing(listingItem) {
 			reviewed: "Reviewed",
 			sentBack: "Sent Back",
 			approved: "Approved",
-			completed: "Completed"
+			completed: "Completed",
 		}[listingItem.status];
-        if (listingItem.status == "completed") listingTitle.classList.add("done");
+		if (listingItem.status == "completed")
+			listingTitle.classList.add("done");
 		//listingStatus.textContent = `Status: ${listingItem.status}`;
 		extraInfo.appendChild(listingStatus);
 		listingBox.appendChild(extraInfo);

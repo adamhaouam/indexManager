@@ -10,39 +10,46 @@
 			<h1>Index Manager</h1>
 		</header>
 		<div id="content">
-            <div class="table">
-                <div class="lvlTitle">Level 1</div>
-                <div class="lvlTitle">Level 2</div>
-                <div class="lvlTitle">Level 3</div>
-                <div id="lv1List">
-                    <div class="listing">
-                        <h3>Template lv1 item</h3>
-                        <div class="icons">
-                            <span class="editIcon">Edit</span
-                            ><span class="editIcon">Del</span>
-                        </div>
-                    </div>
-                </div>
-                <div id="lv2List">
-                    <div class="listing">
-                        <h3>Template lv2 item</h3>
-                        <div class="icons">
-                            <span class="editIcon">Edit</span
-                            ><span class="editIcon">Del</span>
-                        </div>
-                    </div>
-                </div>
-                <div id="lv3List">
-                    <div class="listing">
-                        <h3>Template lv3 item</h3>
-                        <div class="icons">
-                            <span class="editIcon">Edit</span
-                            ><span class="editIcon">Del</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <button id="saveData">Save Data</button>
+			<div class="table">
+				<div class="lvlTitle">Level 1</div>
+				<div class="lvlTitle">Level 2</div>
+				<div class="lvlTitle">Level 3</div>
+				<div id="lv1List">
+					<div class="listing">
+						<h3>Template lv1 item</h3>
+						<div class="icons">
+							<span class="editIcon">Edit</span
+							><span class="editIcon">Del</span>
+						</div>
+					</div>
+				</div>
+				<div id="lv2List">
+					<div class="listing">
+						<h3>Template lv2 item</h3>
+						<div class="icons">
+							<span class="editIcon">Edit</span
+							><span class="editIcon">Del</span>
+						</div>
+					</div>
+				</div>
+				<div id="lv3List">
+					<div class="listing">
+						<h3>Template lv3 item</h3>
+						<div class="icons">
+							<span class="editIcon">Edit</span
+							><span class="editIcon">Del</span>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="settings">
+				<h3>Settings (WIP):</h3>
+				<label for="searchBar">Search:</label>
+				<input type="text" id="searchBar" name="searchBar" />
+				<button id="saveData">Save Data</button>
+				<button id="showDeleted">Show Deleted</button>
+				<button id="downloadData">Download Data</button>
+			</div>
 		</div>
 		<dialog id="basicMenu">
 			<h2 id="basicMenuTitle">Create Item</h2>
@@ -76,10 +83,10 @@
 					<option value="notStarted">Not Started</option>
 					<option value="inProgress">In progress</option>
 					<option value="draftCompleted">Draft Completed</option>
-                    <option value="reviewed">Reviewed</option>
-                    <option value="sentBack">Sent Back</option>
-                    <option value="approved">Approved</option>
-                    <option value="completed">Completed</option>
+					<option value="reviewed">Reviewed</option>
+					<option value="sentBack">Sent Back</option>
+					<option value="approved">Approved</option>
+					<option value="completed">Completed</option>
 				</select>
 				<button id="advSubmit" type="button">Create Listing</button>
 				<button id="advEdit" type="button">Save Listing</button>
@@ -88,8 +95,10 @@
 
 		<footer>
 			<span
-				>Created by Adam Haouam -
-			<span><a href="https://github.com/adamhaouam">GitHub Page</a></span>
+				>Created by Adam Haouam -<a href="https://github.com/adamhaouam"
+					>GitHub Page</a
+				></span
+			>
 		</footer>
 	</body>
 </html>

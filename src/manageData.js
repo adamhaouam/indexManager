@@ -108,42 +108,34 @@ function storageAvailable(type) {
 	}
 }
 
-
-
-
-	
-
 let dataSet;
-const url = "https://api.jsonbin.io/v3/b/69701f4f43b1c97be93e0785"
+const url = "https://api.jsonbin.io/v3/b/69701f4f43b1c97be93e0785";
 
 //if !masterkey variable use public api else use private api with master key
 
-
 //run after updating?
 export async function fetchData() {
-  try {
-    const response = await fetch(url + "/latest", {
-		method: "GET", // or "PATCH"
-		headers: {
-			"Accept": "application/json",  
-		},
-	});
-    if (!response.ok) {
-      throw new Error(`Response status: ${response.status}`);
-    }
+	try {
+		const response = await fetch(url + "/latest", {
+			method: "GET", // or "PATCH"
+			headers: {
+				Accept: "application/json",
+			},
+		});
+		if (!response.ok) {
+			throw new Error(`Response status: ${response.status}`);
+		}
 
-    const result = await response.json();
-	dataSet = result.record;
-	console.log("Receving: ", JSON.stringify(dataSet));
-	console.log("Inside fetchdata function", dataSet.listings[0].name);
-	return formatData(dataSet);
-	//return formatData(dataSet);
-	
-  } catch (error) {
-    console.error(error.message);
-  }
+		const result = await response.json();
+		dataSet = result.record;
+		console.log("Receving: ", JSON.stringify(dataSet));
+		console.log("Inside fetchdata function", dataSet.listings[0].name);
+		return formatData(dataSet);
+		//return formatData(dataSet);
+	} catch (error) {
+		console.error(error.message);
+	}
 }
-
 
 function formatData(data) {
 	const rawData = data;
@@ -157,8 +149,7 @@ function formatData(data) {
 		);
 		restoredData.addListing(newLvl1Listing);
 		for (const lvl2Index in thisRawLvl1Listing.listings) {
-			const thisRawLvl2Listing =
-				thisRawLvl1Listing.listings[lvl2Index];
+			const thisRawLvl2Listing = thisRawLvl1Listing.listings[lvl2Index];
 			const newLvl2Listing = new BasicListing(
 				thisRawLvl2Listing.name,
 				String(thisRawLvl2Listing.index),
@@ -182,28 +173,26 @@ function formatData(data) {
 	return restoredData;
 }
 
-
 export async function postJSON(data) {
-  try {
-    const response = await fetch(url, {
-		method: "PUT", // or "PATCH"
-		headers: {
-			"Accept": "application/json",
-			"Content-Type": "application/json",
-		},
-		body: JSON.stringify(data),
-	});
-	
-    if (!response.ok) {
-      throw new Error(`Response status: ${response.status}`);
-    }
+	try {
+		const response = await fetch(url, {
+			method: "PUT", // or "PATCH"
+			headers: {
+				Accept: "application/json",
+				"Content-Type": "application/json",
+			},
+			body: JSON.stringify(data),
+		});
 
-	//get updated data back
-    const result = await response.json();
-	dataSet = result.record;
-	return formatData(dataSet);
-	
-  } catch (error) {
-    console.error(error.message);
-  }
+		if (!response.ok) {
+			throw new Error(`Response status: ${response.status}`);
+		}
+
+		//get updated data back
+		const result = await response.json();
+		dataSet = result.record;
+		return formatData(dataSet);
+	} catch (error) {
+		console.error(error.message);
+	}
 }
