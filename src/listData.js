@@ -35,7 +35,7 @@ class BasicListing extends Listing {
 }
 
 class AdvListing extends Listing {
-	constructor(name, index, desc, status, isDeleted = false) {
+	constructor(name, index, desc, status = "notStarted", isDeleted = false) {
 		super(name, index, isDeleted);
 		this.desc = desc;
 		this.status = status;

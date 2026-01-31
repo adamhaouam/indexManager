@@ -43,12 +43,11 @@ let selectedLevel = 1;
 
 
 
-
 loadPage();
 
 
 async function loadPage() {
-    // dataSet = getLocalData();
+    //dataSet = getLocalData();
     dataSet = await fetchData();
     console.log("Data has been imported! lets update dom", dataSet);
     selectedLvl1 = findFirstUndeletedLvl1();
@@ -333,7 +332,7 @@ function updateDOM() {
 	// console.log(dataSet);
 }
 
-function createListing(listingItem, indexNo) {
+function createListing(listingItem) {
 	const listingBox = document.createElement("div");
 	listingBox.classList.add("listing");
 	const mainInfo = document.createElement("div");
@@ -343,11 +342,8 @@ function createListing(listingItem, indexNo) {
 
 	const index = document.createElement("span");
 
-	// if (indexNo.length == 1) {
-	//     indexNo = "0" + indexNo;
-	// }
 
-	index.textContent = listingItem.index;
+	index.textContent = "#" + listingItem.index;
 	index.classList.add("index");
 	mainInfo.appendChild(index);
 
@@ -367,16 +363,23 @@ function createListing(listingItem, indexNo) {
 
 	if (listingItem instanceof AdvListing) {
 		const extraInfo = document.createElement("div");
+        extraInfo.classList.add("extraInfo");
 		const listingDesc = document.createElement("div");
 		listingDesc.textContent = listingItem.desc;
 		listingDesc.classList.add("description");
 		extraInfo.appendChild(listingDesc);
 		const listingStatus = document.createElement("p");
+        listingStatus.classList.add(listingItem.status);
 		listingStatus.textContent = {
-			new: "New",
-			progress: "In-progress",
-			completed: "Completed",
+			notStarted: "Not Started",
+			inProgress: "In Progress",
+			draftCompleted: "Draft Completed",
+			reviewed: "Reviewed",
+			sentBack: "Sent Back",
+			approved: "Approved",
+			completed: "Completed"
 		}[listingItem.status];
+        if (listingItem.status == "completed") listingTitle.classList.add("done");
 		//listingStatus.textContent = `Status: ${listingItem.status}`;
 		extraInfo.appendChild(listingStatus);
 		listingBox.appendChild(extraInfo);
@@ -439,7 +442,7 @@ function createAddListingBox(level) {
 			advEdit.style.display = "none";
 			advListingNameField.value = "";
 			advListingDescField.value = "";
-			advListingStatusField.value = "";
+			advListingStatusField.value = "notStarted";
 			advMenu.showModal();
 		}
 	});

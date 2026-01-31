@@ -35,44 +35,110 @@ img {
 	max-inline-size: 100%;
 }
 
-.container {
-	height: 100vh;
-	display: grid;
-	grid-template: 180px 1fr / 200px 1fr;
+
+@import url('https://fonts.googleapis.com/css2?family=Funnel+Sans:wght@300..800&family=Merriweather+Sans:ital,wght@0,300..800;1,300..800&display=swap');
+* {
+	font-family: 'Merriweather Sans', sans-serif;
+	font-weight: 350;
 }
 
+
 body {
-	background-color: rebeccapurple;
 	display: flex;
 	flex-direction: column;
 	height: 100vh;
 	width: 100%;
 	align-items: center;
 	justify-content: space-between;
+	overflow: hidden;
 }
 
 #content {
-	background-color: beige;
-	padding: 25px;
+	background-color: #ffffff;
 	flex-grow: 1;
 	width: 100%;
+	display: flex;
+	justify-content: space-between;
+	padding: 10px;
+	align-items: center;
+	flex-direction: column;
+}
+
+.table {
+	margin: 20px;
 	display: grid;
 	grid-template-columns: 1fr 1fr 2fr;
 	grid-template-rows: 50px 1fr;
+	width: 100%;
+	max-width: 1500px;
+	flex-grow: 1;
 }
+
+h1 {
+	text-align: center;
+	font-size: 1.3rem;
+	font-weight: 600;
+	margin: 5px;
+}
+
+
+#lv1List,
+#lv2List,
+#lv3List {
+	background-color: #D5C28B;
+	padding: 3px;
+	margin: 5px;
+	border-radius: 5px;
+	overflow-y: scroll;
+	max-height: 80vh;
+}
+
+/* From https://codepen.io/stephenpaton-tech/full/JjRvGmY */
+/* ===== Scrollbar CSS ===== */
+/* Firefox */
+  * {
+    scrollbar-width: auto;
+    scrollbar-color: #C1AD77 #ffffff;
+  }
+
+  /* Chrome, Edge, and Safari */
+  *::-webkit-scrollbar {
+    width: 16px;
+  }
+
+  *::-webkit-scrollbar-track {
+    background: #ffffff;
+  }
+
+  *::-webkit-scrollbar-thumb {
+    background-color: #C1AD77;
+    border-radius: 10px;
+    border: 3px solid #ffffff;
+  }
+
 
 header,
 footer {
-	background-color: chocolate;
+	background-color: #C1AD77;
 	padding: 5px;
 	width: 100%;
 	text-align: center;
 }
 
+
+.lvlTitle {
+	font-size: 1.2rem;
+	font-weight: bold;
+	text-align: center;
+	padding: 5px;
+	font-weight: 700;
+}
+
+
 .listing {
 	padding: 5px;
 	margin: 5px;
-	background-color: lightgray;
+	background-color: #fff8e1;
 	border: solid 2px black;
 	border-radius: 5px;
 }
@@ -80,6 +146,32 @@ footer {
 .mainInfo {
 	display: flex;
 	justify-content: space-between;
+}
+
+.extraInfo {
+	margin-top: 5px;
+	padding-top: 5px;
+	display: flex;
+	justify-content: space-between;
+	width: 100%;
+}
+
+.extraInfo > div {
+	margin-right: 15px;
+	flex-grow: 1;
+	border: 1px solid black;
+	background-color: white;
+	opacity: 0.9;
+	max-width: 500px;
+	padding: 2px;
+	font-size: 0.8em;
+}
+
+.extraInfo > p {
+	opacity: 0.9;
+	padding: 2px;
+	border-radius: 5px;
+	font-size: 0.8em;
 }
 
 .index {
@@ -90,7 +182,13 @@ footer {
 }
 
 .addListing {
-	background-color: green;
+	padding: 5px;
+	margin: 5px;
+	border: dotted 4px #93b93b;
+	border-radius: 10px;
+	text-align: center;
+	cursor: pointer;
+	background-color: #c2ec8b;
 }
 
 .description {
@@ -108,60 +206,74 @@ footer {
 	visibility: visible;
 }
 
-.newProjectEntry,
-.newTaskEntry {
-	padding: 5px;
-	margin: 5px;
-	background-color: lightgreen;
-	border: dotted 3px black;
-	border-radius: 5px;
-	text-align: center;
-	cursor: pointer;
-}
-
-#TaskMenu,
-#projectMenu {
-	position: absolute;
-	top: 50%;
-	left: 50%;
-	transform: translate(-50%, -50%);
-	background-color: rgb(111, 134, 207);
+#basicMenu, #advMenu {
 	padding: 30px;
 }
 
-#TaskForm,
-#newProjectForm {
-	display: grid;
-	grid-template-columns: 1fr 1fr;
-	gap: 10px;
+dialog > h2 {
+	font-weight: 500;
+	font-size: 1.1rem;
+	text-align: center;
+	background-color: #C1AD77;
 }
 
-#taskSubmit,
-#taskEdit,
-#projectSubmit,
-#projectEdit {
-	grid-column: span 2;
-	padding: 10px 30px;
-	justify-self: center;
+#basicMenuForm, #advMenuForm {
+	display: grid;
+	grid-template-columns: 1fr 2fr;
+	gap: 10px;
+	padding: 10px;
 }
+
+/*and cancel form*/
+#basicSubmit, #basicEdit, #advSubmit, #advEdit {
+	grid-column: span 2;
+	padding: 5px 20px;
+	background-color: #c2ec8b;
+	border: solid 4px #93b93b;
+	border-radius: 10px;
+}
+
 
 .selected {
-	background-color: rgb(97, 97, 255);
-}
-
-.taskDescBox {
-	font-size: 0.9em;
-	padding: 3px;
-}
-
-.new {
-	background-color: aliceblue;
-}
-
-.progress {
-	background-color: darksalmon;
+	background-color: #EADBAB;
 }
 
 .done {
 	text-decoration: line-through;
+}
+
+
+.notStarted {
+	background-color: #6fb0d6;
+	border: 3px solid rgb(59, 111, 206);
+}
+
+.inProgress {
+	background-color: rgb(255, 175, 208);
+	border: 3px solid rgb(201, 70, 114);
+}
+
+.draftCompleted {
+	background-color: rgb(238, 174, 100);
+	border: 3px	 solid rgb(148, 100, 61);
+}
+
+.reviewed {
+	background-color: rgb(255, 148, 255);
+	border: 3px solid rgb(131, 61, 148);
+}
+
+.sentBack {
+	background-color: rgb(255, 92, 92);
+	border: 3px solid rgb(121, 36, 36);
+}
+
+.approved {
+	background-color: rgb(156, 218, 106);
+	border: 3px solid rgb(66, 145, 42);
+}
+
+.completed {
+	background-color: rgb(255, 223, 83);
+	border: 3px solid rgb(207, 150, 27);
 }

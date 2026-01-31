@@ -15,3 +15,5 @@ Pull data from server before modifying and pushing to ensure no data is overlapp
 Add timeout to prompt user for refresh after 5 minutes of inactivity
 Update API to use private key
 Improve appearance of website
+Add cancel button to forms
+Add index search and clipboard
