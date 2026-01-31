@@ -2,7 +2,7 @@
 import "./styles.css";
 import "../node_modules/modern-normalize";
 import { BasicListing, AdvListing, DataSet } from "./listData.js";
-import { getLocalData, setLocalData, getJSON } from "./manageData.js";
+import { getLocalData, setLocalData, fetchData, postJSON } from "./manageData.js";
 
 const basicMenu = document.getElementById("basicMenu");
 const basicMenuTitle = document.getElementById("basicMenuTitle");
@@ -26,20 +26,37 @@ const lv1List = document.getElementById("lv1List");
 const lv2List = document.getElementById("lv2List");
 const lv3List = document.getElementById("lv3List");
 
-///Get data from local storage
-const dataSet = getLocalData();
 
 //TODO: implement show deleted toggle
 let showDeleted = false;
 
+
+///Get data from local storage
+let dataSet = null;
+
 //get first undeleted
-let selectedLvl1 = findFirstUndeletedLvl1();
+let selectedLvl1 = null;
 let selectedLvl2 = null;
 let selectedLvl3 = null;
 
 let selectedLevel = 1;
 
-updateDOM();
+
+
+
+loadPage();
+
+
+async function loadPage() {
+    // dataSet = getLocalData();
+    dataSet = await fetchData();
+    console.log("Data has been imported! lets update dom", dataSet);
+    selectedLvl1 = findFirstUndeletedLvl1();
+    updateDOM();
+    console.log("DOM updated")
+}
+
+
 
 lv1List.addEventListener("click", function () {
 	selectedLevel = 1;
@@ -105,6 +122,8 @@ function addNewBasicListing(name) {
 		console.log("Selected lvl2:", selectedLvl2);
 		selectedLvl3 = null;
 	}
+    console.log("posting json", dataSet);
+    postJSON(dataSet);
 }
 
 function addNewAdvListing(name, description, status) {
@@ -124,6 +143,8 @@ function addNewAdvListing(name, description, status) {
 		newAdvListing,
 	);
 	selectedLvl3 = findLastUndeletedLvl3();
+    console.log("posting json", dataSet);
+    postJSON(dataSet);
 }
 
 function editBasicListing(newName) {
@@ -132,12 +153,16 @@ function editBasicListing(newName) {
 	} else if (selectedLevel == 2) {
 		dataSet.listings[selectedLvl1].listings[selectedLvl2].editName(newName);
 	}
+    console.log("posting json", dataSet);
+    postJSON(dataSet);
 }
 
 function editAdvListing(newName, newDesc, newStatus) {
 	dataSet.listings[selectedLvl1].listings[selectedLvl2].listings[
 		selectedLvl3
 	].editTask(newName, newDesc, newStatus);
+    console.log("posting json", dataSet);
+    postJSON(dataSet);
 }
 
 function findFirstUndeletedLvl1() {
@@ -304,8 +329,8 @@ function updateDOM() {
 	}
 
 	lv1List.appendChild(createAddListingBox(1));
-	console.log(selectedLvl1, selectedLvl2, selectedLvl3);
-	console.log(dataSet);
+	// console.log(selectedLvl1, selectedLvl2, selectedLvl3);
+	// console.log(dataSet);
 }
 
 function createListing(listingItem, indexNo) {
