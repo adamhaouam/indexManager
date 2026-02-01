@@ -14,7 +14,6 @@ const basicListingNameField = document.getElementById("basicListingName");
 const basicSubmit = document.getElementById("basicSubmit");
 const basicEdit = document.getElementById("basicEdit");
 
-const dataStateLabel = document.getElementById("dataState");
 
 const advMenu = document.getElementById("advMenu");
 const advMenuTitle = document.getElementById("advMenuTitle");
@@ -25,6 +24,10 @@ const advListingStatusField = document.getElementById("advListingStatus");
 const advSubmit = document.getElementById("advSubmit");
 const advEdit = document.getElementById("advEdit");
 
+const showDeletedButton = document.getElementById("showDeleted");
+const refreshButton = document.getElementById("refresh");
+const searchButton = document.getElementById("search");
+const searchBar = document.getElementById("searchBar");
 
 const saveDataButton = document.getElementById("saveData");
 
@@ -47,10 +50,6 @@ let selectedLevel = 1;
 
 
 //Initial load
-if (dataState == "prod") {
-    dataStateLabel.textContent = " - (Prod)";
-    document.title = "Index Manager (Prod)";
-}
 
 loadPage();
 
@@ -78,6 +77,22 @@ lv3List.addEventListener("click", function () {
 	selectedLevel = 3;
 });
 
+showDeletedButton.addEventListener("change", function () {
+	showDeleted = showDeletedButton.checked;
+	updateDOM();
+});
+
+refreshButton.addEventListener("click", async function () {
+	await refreshData();
+	updateDOM();
+});
+
+searchButton.addEventListener("click", function () {
+	const query = searchBar.value.toLowerCase();
+	console.log("Searching for:", query);
+	//TODO implement search functionality
+	alert("Search functionality is not yet implemented.");
+});
 
 advSubmit.addEventListener("click", function () {
 	addNewAdvListing(
@@ -223,6 +238,12 @@ function findLastUndeletedLvl3() {
 		}
 	}
 	return null;
+}
+
+function toggleDeleteThis(listingItem) {
+	listingItem.toggleDelete();
+	postJSON(dataSet);
+	updateDOM();
 }
 
 function updateDOM() {
@@ -378,11 +399,19 @@ function createListing(listingItem) {
 	iconsBox.appendChild(editIcon);
 	const deleteIcon = document.createElement("span");
 	deleteIcon.classList.add("deleteIcon");
-	deleteIcon.textContent = "Del";
+	if (listingItem.isDeleted) {
+		deleteIcon.textContent = "Recover";
+	} else {
+		deleteIcon.textContent = "Del";
+	}
 	iconsBox.appendChild(deleteIcon);
 	mainInfo.appendChild(iconsBox);
 	mainInfo.classList.add("mainInfo");
 	listingBox.appendChild(mainInfo);
+
+	if (listingItem.isDeleted) {
+		listingBox.classList.add("deleted");
+	}
 
 	if (listingItem instanceof AdvListing) {
 		const extraInfo = document.createElement("div");
@@ -427,27 +456,27 @@ function createListing(listingItem) {
 		}
 	});
 
-	deleteIcon.addEventListener("click", function (event) {
+	deleteIcon.addEventListener("click", async function (event) {
 		if (
-			confirm(`Are you sure you want to delete task ${listingItem.name}?`)
+			confirm(`Are you sure?`)
 			
 		) {
-			refreshData() 
-			listingItem.deleteThis();
-			postJSON(dataSet);
-			if (selectedLevel == 1) {
-				selectedLvl1 = findFirstUndeletedLvl1();
-				selectedLvl2 = null;
-				selectedLvl3 = null;
-			} else if (selectedLevel == 2) {
-				selectedLvl2 = findFirstUndeletedLvl2();
-				selectedLvl3 = null;
-			} else if (selectedLevel == 3) {
-				selectedLvl3 = findFirstUndeletedLvl3();
+			if (listingItem.isDeleted) {
+				console.log("Deleted item:", listingItem.name);
+				if (selectedLevel == 1) {
+					selectedLvl1 = findFirstUndeletedLvl1();
+					selectedLvl2 = null;
+					selectedLvl3 = null;
+				} else if (selectedLevel == 2) {
+					selectedLvl2 = findFirstUndeletedLvl2();
+					selectedLvl3 = null;
+				} else if (selectedLevel == 3) {
+					selectedLvl3 = findFirstUndeletedLvl3();
+				}
 			}
+			toggleDeleteThis(listingItem);
 		}
-		event.stopPropagation();
-		updateDOM();
+		
 	});
 
 	return listingBox;

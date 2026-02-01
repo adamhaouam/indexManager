@@ -314,3 +314,7 @@ dialog > h2 {
 	cursor: pointer;
 }
 
+.deleted {
+	border: 2px solid rgb(146, 31, 31);
+	opacity: 0.6;
+}

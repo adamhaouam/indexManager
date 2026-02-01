@@ -14,9 +14,10 @@ class Listing {
 		return this.index;
 	}
 
-	deleteThis() {
-		console.log("Deleting entry: " + this.name);
-		this.isDeleted = true;
+	toggleDelete() {
+		console.log("Toggling delete status for entry: " + this.name + " from " + this.isDeleted + " to " + !this.isDeleted);
+		this.isDeleted = !this.isDeleted;
+		console.log(this.name, " new isDeleted status: ", this.isDeleted);
 	}
 }
 
