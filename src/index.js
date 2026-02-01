@@ -1,10 +1,8 @@
 "use strict";
 import "./styles.css";
 import "../node_modules/modern-normalize";
-import { BasicListing, AdvListing, DataSet } from "./listData.js";
+import { BasicListing, AdvListing } from "./listData.js";
 import {
-	getLocalData,
-	setLocalData,
 	fetchData,
 	postJSON,
 } from "./manageData.js";
@@ -16,14 +14,17 @@ const basicListingNameField = document.getElementById("basicListingName");
 const basicSubmit = document.getElementById("basicSubmit");
 const basicEdit = document.getElementById("basicEdit");
 
+const dataState = document.getElementById("dataState");
+
 const advMenu = document.getElementById("advMenu");
 const advMenuTitle = document.getElementById("advMenuTitle");
-const advMenuForm = document.getElementById("advancedMenuForm");
+const advMenuForm = document.getElementById("advMenuForm");
 const advListingNameField = document.getElementById("advListingName");
 const advListingDescField = document.getElementById("advListingDesc");
 const advListingStatusField = document.getElementById("advListingStatus");
 const advSubmit = document.getElementById("advSubmit");
 const advEdit = document.getElementById("advEdit");
+
 
 const saveDataButton = document.getElementById("saveData");
 
@@ -43,6 +44,12 @@ let selectedLvl2 = null;
 let selectedLvl3 = null;
 
 let selectedLevel = 1;
+
+
+//Initial load
+if (process.env.xMasterKey) {
+    dataState.textContent = " - (Prod)";
+}
 
 loadPage();
 
@@ -65,10 +72,6 @@ lv3List.addEventListener("click", function () {
 	selectedLevel = 3;
 });
 
-saveDataButton.addEventListener("click", function () {
-	setLocalData(dataSet);
-	alert("Saved!", dataSet);
-});
 
 advSubmit.addEventListener("click", function () {
 	addNewAdvListing(
@@ -341,7 +344,7 @@ function createListing(listingItem) {
 	const index = document.createElement("button");
 	index.textContent = "#" + listingItem.index;
 	index.classList.add("index");
-	index.addEventListener("click", function (event) {
+	index.addEventListener("click", function () {
 		if (listingItem instanceof AdvListing) {
 			alert(
 				`"${dataSet.listings[selectedLvl1].index}-${dataSet.listings[selectedLvl1].listings[selectedLvl2].index}-${listingItem.index}" copied to clipboard.`,

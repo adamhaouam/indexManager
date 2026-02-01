@@ -1,7 +1,10 @@
 const path = require("path");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
+const webpack = require("webpack");
+require('dotenv').config({ path: './.env' }); 
 
 console.log("FKLSDJHFLKJSDHFLKJSDHFKLJHSD");
+
 
 module.exports = {
 	mode: "development",
@@ -20,6 +23,9 @@ module.exports = {
 	plugins: [
 		new HtmlWebpackPlugin({
 			template: "./src/template.html",
+		}),
+		new webpack.DefinePlugin({
+			'process.env': JSON.stringify(process.env)
 		}),
 	],
 	module: {
