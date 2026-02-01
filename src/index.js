@@ -49,6 +49,7 @@ let selectedLevel = 1;
 //Initial load
 if (process.env.xMasterKey) {
     dataState.textContent = " - (Prod)";
+    document.title = "Index Manager (Prod)";
 }
 
 loadPage();
