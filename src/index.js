@@ -1,10 +1,8 @@
 "use strict";
 import "./styles.css";
 import "../node_modules/modern-normalize";
-import { BasicListing, AdvListing, DataSet } from "./listData.js";
+import { BasicListing, AdvListing } from "./listData.js";
 import {
-	getLocalData,
-	setLocalData,
 	fetchData,
 	postJSON,
 } from "./manageData.js";
@@ -65,10 +63,6 @@ lv3List.addEventListener("click", function () {
 	selectedLevel = 3;
 });
 
-saveDataButton.addEventListener("click", function () {
-	setLocalData(dataSet);
-	alert("Saved!", dataSet);
-});
 
 advSubmit.addEventListener("click", function () {
 	addNewAdvListing(
@@ -341,7 +335,7 @@ function createListing(listingItem) {
 	const index = document.createElement("button");
 	index.textContent = "#" + listingItem.index;
 	index.classList.add("index");
-	index.addEventListener("click", function (event) {
+	index.addEventListener("click", function () {
 		if (listingItem instanceof AdvListing) {
 			alert(
 				`"${dataSet.listings[selectedLvl1].index}-${dataSet.listings[selectedLvl1].listings[selectedLvl2].index}-${listingItem.index}" copied to clipboard.`,
