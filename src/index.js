@@ -63,6 +63,11 @@ async function loadPage() {
 	console.log("DOM updated");
 }
 
+async function refreshData() {
+	dataSet = await fetchData();
+	console.log("Data has been re-imported! ", dataSet);
+}
+
 lv1List.addEventListener("click", function () {
 	selectedLevel = 1;
 });
@@ -81,19 +86,16 @@ advSubmit.addEventListener("click", function () {
 		advListingStatusField.value,
 	);
 	advMenu.close();
-	updateDOM();
 });
 
 basicSubmit.addEventListener("click", function () {
 	addNewBasicListing(basicListingNameField.value);
 	basicMenu.close();
-	updateDOM();
 });
 
 basicEdit.addEventListener("click", function () {
 	editBasicListing(basicListingNameField.value);
 	basicMenu.close();
-	updateDOM();
 });
 
 advEdit.addEventListener("click", function () {
@@ -103,10 +105,10 @@ advEdit.addEventListener("click", function () {
 		advListingStatusField.value,
 	);
 	advMenu.close();
-	updateDOM();
 });
 
-function addNewBasicListing(name) {
+async function addNewBasicListing(name) {
+	await refreshData()
 	if (selectedLevel == 1) {
 		const newBasicListing = new BasicListing(name, dataSet.listings.length + 1);
 		dataSet.addListing(newBasicListing);
@@ -125,9 +127,11 @@ function addNewBasicListing(name) {
 	}
 	console.log("posting json", dataSet);
 	postJSON(dataSet);
+	updateDOM();
 }
 
-function addNewAdvListing(name, description, status) {
+async function addNewAdvListing(name, description, status) {
+	await refreshData() 
 	const newAdvListing = new AdvListing(
 		name,
 		dataSet.listings[selectedLvl1].listings[selectedLvl2].listings.length + 1,
@@ -140,9 +144,11 @@ function addNewAdvListing(name, description, status) {
 	selectedLvl3 = findLastUndeletedLvl3();
 	console.log("posting json", dataSet);
 	postJSON(dataSet);
+	updateDOM();
 }
 
-function editBasicListing(newName) {
+async function editBasicListing(newName) {
+	await refreshData() 
 	if (selectedLevel == 1) {
 		dataSet.listings[selectedLvl1].editName(newName);
 	} else if (selectedLevel == 2) {
@@ -150,14 +156,17 @@ function editBasicListing(newName) {
 	}
 	console.log("posting json", dataSet);
 	postJSON(dataSet);
+	updateDOM();
 }
 
-function editAdvListing(newName, newDesc, newStatus) {
+async function editAdvListing(newName, newDesc, newStatus) {
+	await refreshData() 
 	dataSet.listings[selectedLvl1].listings[selectedLvl2].listings[
 		selectedLvl3
 	].editTask(newName, newDesc, newStatus);
 	console.log("posting json", dataSet);
 	postJSON(dataSet);
+	updateDOM();
 }
 
 function findFirstUndeletedLvl1() {
@@ -421,8 +430,11 @@ function createListing(listingItem) {
 	deleteIcon.addEventListener("click", function (event) {
 		if (
 			confirm(`Are you sure you want to delete task ${listingItem.name}?`)
+			
 		) {
+			refreshData() 
 			listingItem.deleteThis();
+			postJSON(dataSet);
 			if (selectedLevel == 1) {
 				selectedLvl1 = findFirstUndeletedLvl1();
 				selectedLvl2 = null;

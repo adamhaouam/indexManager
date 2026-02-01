@@ -26,48 +26,47 @@ if (apiKey != "" && apiKey !== null && apiKey !== undefined) {
 let dataSet;
 
 export async function fetchData() {
-	try {
-		if (apiKey) {
-			console.log("Using master key for authentication.");
+	if (apiKey) {
+		try {
 			const response = await fetch(url + "/latest", {
 				method: "GET", // or "PATCH"
 				headers: {
 					"Accept": "application/json",
-					"X-Access-Key": apiKey,
+					"X-Master-Key": "$2a$10$VdvVArXAoaUPHq3wzuP2vOlAinRb4M1DAj0VCU07ptQjTvKNqrpZi",
+				
 				},
 			});
 			if (!response.ok) {
-				alert("Error fetching prod data: " + response.status + ". Reverting to public API.");
-				url = "https://api.jsonbin.io/v3/b/697ebf1843b1c97be95c5938";
-			}
-			else {
-				const result = await response.json();
-				dataSet = result.record;
-				//console.log("Receving: ", JSON.stringify(dataSet));
-				alert("Successfully fetched prod data using master key.");
-				return formatData(dataSet);
-			}
-			
-		}
-
-		console.log("No master key found, using public API.");
-		const response = await fetch(url + "/latest", {
-			method: "GET", // or "PATCH"
-			headers: {
-				Accept: "application/json",
-			},
-		});
-		if (!response.ok) {
 			throw new Error(`Response status: ${response.status}`);
-		}
-		const result = await response.json();
-		dataSet = result.record;
-		//console.log("Receving: ", JSON.stringify(dataSet));
-		return formatData(dataSet);
+			}
 
-	} catch (error) {
-		console.error(error.message);
+			const result = await response.json();
+			dataSet = result.record;
+			return formatData(dataSet);
+		} catch (error) {
+			console.error(error.message);
+		}
+	} else {
+		try {
+			const response = await fetch(url + "/latest", {
+				method: "GET",
+				headers: {
+					"Accept": "application/json",			
+				},
+			});
+			if (!response.ok) {
+			throw new Error(`Response status: ${response.status}`);
+			}
+
+			const result = await response.json();
+			dataSet = result.record;
+			return formatData(dataSet);
+			
+		} catch (error) {
+			console.error(error.message);
+		}
 	}
+	
 }
 
 function formatData(data) {
@@ -107,41 +106,56 @@ function formatData(data) {
 }
 
 export async function postJSON(data) {
-	try {
-		if (apiKey) {
-			console.log("Using master key for authentication.");
-			const response = await fetch(url, {
-			method: "PUT", // or "PATCH"
-			headers: {
-				"Accept": "application/json",
-				"Content-Type": "application/json",
-				"X-Master-Key": apiKey,
-			
-			},
-			body: JSON.stringify(data),
-		});
-		}
-		else {
-			console.log("No master key found, using public API.");
+	if (apiKey) {
+		try {
 			const response = await fetch(url, {
 				method: "PUT", // or "PATCH"
 				headers: {
-					Accept: "application/json",
+					"Accept": "application/json",
 					"Content-Type": "application/json",
+					"X-Master-Key": "$2a$10$VdvVArXAoaUPHq3wzuP2vOlAinRb4M1DAj0VCU07ptQjTvKNqrpZi",
+				
 				},
 				body: JSON.stringify(data),
 			});
-		}
-		
-		if (!response.ok) {
+			
+			if (!response.ok) {
 			throw new Error(`Response status: ${response.status}`);
-		}
+			}
 
-		//get updated data back
-		const result = await response.json();
-		dataSet = result.record;
-		return formatData(dataSet);
-	} catch (error) {
-		console.error(error.message);
+			//get updated data back
+			const result = await response.json();
+			dataSet = result.record;
+			console.log("fadfds", dataSet);
+			return formatData(dataSet);
+			
+		} catch (error) {
+			console.error(error.message);
+		}
+	} else {
+		try {
+			const response = await fetch(url, {
+				method: "PUT", // or "PATCH"
+				headers: {
+					"Accept": "application/json",
+					"Content-Type": "application/json",
+				
+				},
+				body: JSON.stringify(data),
+			});
+			
+			if (!response.ok) {
+			throw new Error(`Response status: ${response.status}`);
+			}
+
+			//get updated data back
+			const result = await response.json();
+			dataSet = result.record;
+			console.log("fadfds", dataSet);
+			return formatData(dataSet);
+			
+		} catch (error) {
+			console.error(error.message);
+		}
 	}
 }
