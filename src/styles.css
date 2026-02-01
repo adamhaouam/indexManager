@@ -284,8 +284,33 @@ dialog > h2 {
 }
 
 .settings {
-	background-color: #c1ad77;
-	padding: 5px;
-	width: 100%;
+	background-color: #e7d39a;
+	padding: 15px 40px;
 	text-align: center;
+	display: grid;
+	grid-template-columns: 3fr 1fr;
+	gap: 12px;
+	border-radius: 10px;
 }
+
+.settings > h3 {
+	grid-column: span 2;
+	background-color: #c1ad77;
+	border-radius: 5px;
+	padding: 5px;
+}
+
+
+.settings > input, .settings > button {
+	padding: 5px;
+	border: 2px solid black;
+	border-radius: 5px;
+}
+
+
+
+#refresh {
+	grid-column: span 2;
+	cursor: pointer;
+}
+
