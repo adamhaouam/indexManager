@@ -108,7 +108,7 @@ advEdit.addEventListener("click", function () {
 
 function addNewBasicListing(name) {
 	if (selectedLevel == 1) {
-		const newBasicListing = new BasicListing(name, dataSet.listings.length);
+		const newBasicListing = new BasicListing(name, dataSet.listings.length + 1);
 		dataSet.addListing(newBasicListing);
 		selectedLvl1 = findLastUndeletedLvl1();
 		selectedLvl2 = null;
@@ -116,7 +116,7 @@ function addNewBasicListing(name) {
 	} else {
 		const newBasicListing = new BasicListing(
 			name,
-			dataSet.listings[selectedLvl1].listings.length,
+			dataSet.listings[selectedLvl1].listings.length + 1,
 		);
 		dataSet.listings[selectedLvl1].addListing(newBasicListing);
 		selectedLvl2 = findLastUndeletedLvl2();
@@ -128,15 +128,9 @@ function addNewBasicListing(name) {
 }
 
 function addNewAdvListing(name, description, status) {
-	console.log(
-		name,
-		dataSet.listings[selectedLvl1].listings[selectedLvl2].listings.length,
-		description,
-		status,
-	);
 	const newAdvListing = new AdvListing(
 		name,
-		dataSet.listings[selectedLvl1].listings[selectedLvl2].listings.length,
+		dataSet.listings[selectedLvl1].listings[selectedLvl2].listings.length + 1,
 		description,
 		status,
 	);

@@ -2,11 +2,11 @@ import { BasicListing, AdvListing, DataSet } from "./listData.js";
 
 
 // Load config at runtime
-let masterKey = "";
-masterKey = prompt("Enter master key (leave blank for public access):");
-console.log(masterKey, "is the master key provided.");
+let apiKey = "";
+apiKey = prompt("Enter master key (leave blank for public access):");
+console.log(apiKey, "is the master key provided.");
 
-//if !masterkey variable use public api else use private api with master key
+//if !apiKey variable use public api else use private api with master key
 let url;
 
 // if (dataState) {
@@ -15,7 +15,7 @@ let url;
 // else {
 // 	console.log("No data state found in env, defaulting to 'dev'.");
 // }
-if (masterKey != "" && masterKey !== null && masterKey !== undefined) {
+if (apiKey != "" && apiKey !== null && apiKey !== undefined) {
 	url = "https://api.jsonbin.io/v3/b/697ebec7d0ea881f4097c4ea"; //private api with master key
 } else {
 	url = "https://api.jsonbin.io/v3/b/697ebf1843b1c97be95c5938"; //public api
@@ -27,13 +27,13 @@ let dataSet;
 
 export async function fetchData() {
 	try {
-		if (masterKey) {
+		if (apiKey) {
 			console.log("Using master key for authentication.");
 			const response = await fetch(url + "/latest", {
 				method: "GET", // or "PATCH"
 				headers: {
 					"Accept": "application/json",
-					"X-Master-Key": masterKey,
+					"X-Access-Key": apiKey,
 				},
 			});
 			if (!response.ok) {
@@ -108,14 +108,14 @@ function formatData(data) {
 
 export async function postJSON(data) {
 	try {
-		if (masterKey) {
+		if (apiKey) {
 			console.log("Using master key for authentication.");
 			const response = await fetch(url, {
 			method: "PUT", // or "PATCH"
 			headers: {
 				"Accept": "application/json",
 				"Content-Type": "application/json",
-				"X-Master-Key": masterKey,
+				"X-Master-Key": apiKey,
 			
 			},
 			body: JSON.stringify(data),
