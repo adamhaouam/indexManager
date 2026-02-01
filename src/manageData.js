@@ -1,16 +1,24 @@
 import { BasicListing, AdvListing, DataSet } from "./listData.js";
+import { getConfig } from './config.js';
+
+
+// Load config at runtime
+const config = getConfig();
+export const dataState = config.dataState;
+const masterKey = config.masterKey;
+console.log(dataState, masterKey);
 
 //if !masterkey variable use public api else use private api with master key
 let url;
 
-if (process.env.dataState) {
-	console.log("Data state from env:", process.env.dataState);
+if (dataState) {
+	console.log("Data state from env is:", dataState);
 }
 else {
 	console.log("No data state found in env, defaulting to 'dev'.");
 }
 
-if (process.env.xMasterKey) {
+if (masterKey) {
 	url = "https://api.jsonbin.io/v3/b/697ebec7d0ea881f4097c4ea"; //private api with master key
 } else {
 	url = "https://api.jsonbin.io/v3/b/697ebf1843b1c97be95c5938"; //public api
@@ -21,13 +29,13 @@ let dataSet;
 
 export async function fetchData() {
 	try {
-		if (process.env.xMasterKey) {
+		if (masterKey) {
 			console.log("Using master key for authentication.");
 			const response = await fetch(url + "/latest", {
 				method: "GET", // or "PATCH"
 				headers: {
 					"Accept": "application/json",
-					"X-Master-Key": process.env.xMasterKey,
+					"X-Master-Key": masterKey,
 				},
 			});
 			if (!response.ok) {
@@ -97,14 +105,14 @@ function formatData(data) {
 
 export async function postJSON(data) {
 	try {
-		if (process.env.X_MASTER_KEY) {
+		if (masterKey) {
 			console.log("Using master key for authentication.");
 			const response = await fetch(url, {
 			method: "PUT", // or "PATCH"
 			headers: {
 				"Accept": "application/json",
 				"Content-Type": "application/json",
-				"X-Master-Key": process.env.X_MASTER_KEY,
+				"X-Master-Key": masterKey,
 			
 			},
 			body: JSON.stringify(data),

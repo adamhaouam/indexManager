@@ -5,6 +5,7 @@ import { BasicListing, AdvListing } from "./listData.js";
 import {
 	fetchData,
 	postJSON,
+	dataState,
 } from "./manageData.js";
 
 const basicMenu = document.getElementById("basicMenu");
@@ -14,7 +15,7 @@ const basicListingNameField = document.getElementById("basicListingName");
 const basicSubmit = document.getElementById("basicSubmit");
 const basicEdit = document.getElementById("basicEdit");
 
-const dataState = document.getElementById("dataState");
+const dataStateLabel = document.getElementById("dataState");
 
 const advMenu = document.getElementById("advMenu");
 const advMenuTitle = document.getElementById("advMenuTitle");
@@ -47,8 +48,8 @@ let selectedLevel = 1;
 
 
 //Initial load
-if (process.env.xMasterKey) {
-    dataState.textContent = " - (Prod)";
+if (dataState == "prod") {
+    dataStateLabel.textContent = " - (Prod)";
     document.title = "Index Manager (Prod)";
 }
 
