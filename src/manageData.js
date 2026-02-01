@@ -2,7 +2,9 @@ import { BasicListing, AdvListing, DataSet } from "./listData.js";
 
 
 // Load config at runtime
-const masterKey = prompt("Enter master key (leave blank for public access):");
+let masterKey = "";
+masterKey = prompt("Enter master key (leave blank for public access):");
+console.log(masterKey, "is the master key provided.");
 
 //if !masterkey variable use public api else use private api with master key
 let url;
@@ -13,7 +15,7 @@ let url;
 // else {
 // 	console.log("No data state found in env, defaulting to 'dev'.");
 // }
-if (masterKey.length > 0) {
+if (masterKey != "" && masterKey !== null && masterKey !== undefined) {
 	url = "https://api.jsonbin.io/v3/b/697ebec7d0ea881f4097c4ea"; //private api with master key
 } else {
 	url = "https://api.jsonbin.io/v3/b/697ebf1843b1c97be95c5938"; //public api
