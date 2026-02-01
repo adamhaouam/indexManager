@@ -5,7 +5,6 @@ import { BasicListing, AdvListing } from "./listData.js";
 import {
 	fetchData,
 	postJSON,
-	dataState,
 } from "./manageData.js";
 
 const basicMenu = document.getElementById("basicMenu");

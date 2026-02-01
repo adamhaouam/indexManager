@@ -1,28 +1,24 @@
 import { BasicListing, AdvListing, DataSet } from "./listData.js";
-import { getConfig } from './config.js';
 
 
 // Load config at runtime
-const config = getConfig();
-export const dataState = config.dataState;
-const masterKey = config.masterKey;
-console.log(dataState, masterKey);
+const masterKey = prompt("Enter master key (leave blank for public access):");
 
 //if !masterkey variable use public api else use private api with master key
 let url;
 
-if (dataState) {
-	console.log("Data state from env is:", dataState);
-}
-else {
-	console.log("No data state found in env, defaulting to 'dev'.");
-}
-
-if (masterKey) {
+// if (dataState) {
+// 	console.log("Data state from env is:", dataState);
+// }
+// else {
+// 	console.log("No data state found in env, defaulting to 'dev'.");
+// }
+if (masterKey.length > 0) {
 	url = "https://api.jsonbin.io/v3/b/697ebec7d0ea881f4097c4ea"; //private api with master key
 } else {
 	url = "https://api.jsonbin.io/v3/b/697ebf1843b1c97be95c5938"; //public api
 }
+
 
 
 let dataSet;
@@ -39,29 +35,34 @@ export async function fetchData() {
 				},
 			});
 			if (!response.ok) {
-				throw new Error(`Response status: ${response.status}`);
+				alert("Error fetching prod data: " + response.status + ". Reverting to public API.");
+				url = "https://api.jsonbin.io/v3/b/697ebf1843b1c97be95c5938";
 			}
-			const result = await response.json();
-			dataSet = result.record;
-			//console.log("Receving: ", JSON.stringify(dataSet));
-			return formatData(dataSet);
-		}
-		else {
-			console.log("No master key found, using public API.");
-			const response = await fetch(url + "/latest", {
-				method: "GET", // or "PATCH"
-				headers: {
-					Accept: "application/json",
-				},
-			});
-			if (!response.ok) {
-				throw new Error(`Response status: ${response.status}`);
+			else {
+				const result = await response.json();
+				dataSet = result.record;
+				//console.log("Receving: ", JSON.stringify(dataSet));
+				alert("Successfully fetched prod data using master key.");
+				return formatData(dataSet);
 			}
-			const result = await response.json();
-			dataSet = result.record;
-			//console.log("Receving: ", JSON.stringify(dataSet));
-			return formatData(dataSet);
+			
 		}
+
+		console.log("No master key found, using public API.");
+		const response = await fetch(url + "/latest", {
+			method: "GET", // or "PATCH"
+			headers: {
+				Accept: "application/json",
+			},
+		});
+		if (!response.ok) {
+			throw new Error(`Response status: ${response.status}`);
+		}
+		const result = await response.json();
+		dataSet = result.record;
+		//console.log("Receving: ", JSON.stringify(dataSet));
+		return formatData(dataSet);
+
 	} catch (error) {
 		console.error(error.message);
 	}
