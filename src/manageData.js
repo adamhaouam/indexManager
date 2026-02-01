@@ -2,7 +2,14 @@ import { BasicListing, AdvListing, DataSet } from "./listData.js";
 
 //if !masterkey variable use public api else use private api with master key
 let url;
-console.log("Master key from env!!!!!!!!!!!!!!!!:", process.env.xMasterKey);
+
+if (process.env.dataState) {
+	console.log("Data state from env:", process.env.dataState);
+}
+else {
+	console.log("No data state found in env, defaulting to 'dev'.");
+}
+
 if (process.env.xMasterKey) {
 	url = "https://api.jsonbin.io/v3/b/697ebec7d0ea881f4097c4ea"; //private api with master key
 } else {
