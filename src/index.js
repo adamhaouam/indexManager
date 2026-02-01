@@ -14,14 +14,17 @@ const basicListingNameField = document.getElementById("basicListingName");
 const basicSubmit = document.getElementById("basicSubmit");
 const basicEdit = document.getElementById("basicEdit");
 
+const dataState = document.getElementById("dataState");
+
 const advMenu = document.getElementById("advMenu");
 const advMenuTitle = document.getElementById("advMenuTitle");
-const advMenuForm = document.getElementById("advancedMenuForm");
+const advMenuForm = document.getElementById("advMenuForm");
 const advListingNameField = document.getElementById("advListingName");
 const advListingDescField = document.getElementById("advListingDesc");
 const advListingStatusField = document.getElementById("advListingStatus");
 const advSubmit = document.getElementById("advSubmit");
 const advEdit = document.getElementById("advEdit");
+
 
 const saveDataButton = document.getElementById("saveData");
 
@@ -41,6 +44,12 @@ let selectedLvl2 = null;
 let selectedLvl3 = null;
 
 let selectedLevel = 1;
+
+
+//Initial load
+if (process.env.xMasterKey) {
+    dataState.textContent = " - (Prod)";
+}
 
 loadPage();
 
