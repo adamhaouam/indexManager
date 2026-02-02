@@ -44,7 +44,7 @@
 			</div>
 			<div class="settings">
 				<h3>Settings:</h3>
-				<input type="text" id="searchBar" name="searchBar" />
+				<input type="text" pattern = "([0-9]){2,3}-([0-9]){2,3}-([0-9]){2,3}$" placeholder="XX-XX-XX" id="searchBar" name="searchBar" />
 				<button id="search">Search</button>
 				<label for="showDeleted">Show Deleted:</label>
 				<input type="checkbox" id="showDeleted" name="showDeleted">

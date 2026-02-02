@@ -49,6 +49,8 @@ let selectedLvl3 = null;
 let selectedLevel = 1;
 
 
+
+
 //Initial load
 
 loadPage();
@@ -66,6 +68,10 @@ async function refreshData() {
 	dataSet = await fetchData();
 	console.log("Data has been re-imported! ", dataSet);
 }
+
+
+searchBar.addEventListener("keydown", findIndex);
+searchButton.addEventListener("click", findIndex);
 
 lv1List.addEventListener("click", function () {
 	selectedLevel = 1;
@@ -87,39 +93,65 @@ refreshButton.addEventListener("click", async function () {
 	updateDOM();
 });
 
-searchButton.addEventListener("click", function () {
-	const query = searchBar.value.toLowerCase();
-	console.log("Searching for:", query);
-	//TODO implement search functionality
-	alert("Search functionality is not yet implemented.");
-});
 
 advSubmit.addEventListener("click", function () {
-	addNewAdvListing(
+	if (advListingNameField.value.trim() === "") {
+		advListingNameField.setCustomValidity("Name cannot be empty.");
+		advListingNameField.reportValidity();
+		return;
+	}
+	else {
+		advListingNameField.setCustomValidity("");
+		addNewAdvListing(
 		advListingNameField.value,
 		advListingDescField.value,
 		advListingStatusField.value,
-	);
-	advMenu.close();
+		);
+		advMenu.close();
+	}
 });
 
 basicSubmit.addEventListener("click", function () {
-	addNewBasicListing(basicListingNameField.value);
-	basicMenu.close();
+	if (basicListingNameField.value.trim() === "") {
+		basicListingNameField.setCustomValidity("Name cannot be empty.");
+		basicListingNameField.reportValidity();
+		return;
+	}
+	else {
+		basicListingNameField.setCustomValidity("");
+		addNewBasicListing(basicListingNameField.value);
+		basicMenu.close();
+	}
 });
 
 basicEdit.addEventListener("click", function () {
-	editBasicListing(basicListingNameField.value);
-	basicMenu.close();
+	if (basicListingNameField.value.trim() === "") {
+		basicListingNameField.setCustomValidity("Name cannot be empty.");
+		basicListingNameField.reportValidity();
+		return;
+	}
+	else {
+		basicListingNameField.setCustomValidity("");
+		editBasicListing(basicListingNameField.value);
+		basicMenu.close();
+	}
 });
 
 advEdit.addEventListener("click", function () {
-	editAdvListing(
+	if (advListingNameField.value.trim() === "") {
+		advListingNameField.setCustomValidity("Name cannot be empty.");
+		advListingNameField.reportValidity();
+		return;
+	}
+	else {
+		advListingNameField.setCustomValidity("");
+		editAdvListing(
 		advListingNameField.value,
 		advListingDescField.value,
 		advListingStatusField.value,
-	);
-	advMenu.close();
+		);
+		advMenu.close();
+	}
 });
 
 async function addNewBasicListing(name) {
@@ -370,6 +402,7 @@ function createListing(listingItem) {
 	index.textContent = "#" + listingItem.index;
 	index.classList.add("index");
 	index.addEventListener("click", function () {
+		console.log("Clicked index:", selectedLvl1, selectedLvl2, selectedLvl3);
 		if (listingItem instanceof AdvListing) {
 			alert(
 				`"${dataSet.listings[selectedLvl1].index}-${dataSet.listings[selectedLvl1].listings[selectedLvl2].index}-${listingItem.index}" copied to clipboard.`,
@@ -503,4 +536,28 @@ function createAddListingBox(level) {
 		}
 	});
 	return addListingBox;
+}
+
+function findIndex(event) {
+	if (event.key == "Enter" || event.button == 0) {
+		console.log(event.button)
+		event.preventDefault();
+		console.log("Searching for index:", searchBar.value);
+		if (searchBar.validity.patternMismatch) {
+			alert("Invalid index format. Please use XX-XX-XX format.");		
+		} else {
+		const indexParts = searchBar.value.split("-");
+		selectedLevel = 3;
+		if ((dataSet.listings[parseInt(indexParts[0]) - 1] != undefined) && (dataSet.listings[parseInt(indexParts[0]) - 1].listings[parseInt(indexParts[1]) - 1] != undefined) && (dataSet.listings[parseInt(indexParts[0]) - 1].listings[parseInt(indexParts[1]) - 1].listings[parseInt(indexParts[2]) - 1] != undefined)) {
+			console.log("Found it!");
+			selectedLvl1= parseInt(indexParts[0]) - 1;
+			selectedLvl2 = parseInt(indexParts[1]) - 1;
+			selectedLvl3 = parseInt(indexParts[2]) - 1;
+		}
+		else alert("Index not found");
+		
+		updateDOM();
+		}
+	}
+	
 }
