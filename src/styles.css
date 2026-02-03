@@ -233,6 +233,14 @@ dialog > h2 {
 	border-radius: 10px;
 }
 
+#basicCancel,
+#advCancel {
+	grid-column: span 2;
+	padding: 3px 20px;
+	font-size: 0.9em;
+	border-radius: 8px;
+}
+
 .index {
 	background-color: #f8de9b;
 	border: 4px solid #c2ab6d;
@@ -300,14 +308,12 @@ dialog > h2 {
 	padding: 5px;
 }
 
-
-.settings > input, .settings > button {
+.settings > input,
+.settings > button {
 	padding: 5px;
 	border: 2px solid black;
 	border-radius: 5px;
 }
-
-
 
 #refresh {
 	grid-column: span 2;

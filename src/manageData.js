@@ -1,6 +1,5 @@
 import { BasicListing, AdvListing, DataSet } from "./listData.js";
 
-
 // Load config at runtime
 let apiKey = "";
 apiKey = prompt("Enter master key (leave blank for public access):");
@@ -21,8 +20,6 @@ if (apiKey != "" && apiKey !== null && apiKey !== undefined) {
 	url = "https://api.jsonbin.io/v3/b/697ebf1843b1c97be95c5938"; //public api
 }
 
-
-
 let dataSet;
 
 export async function fetchData() {
@@ -31,13 +28,13 @@ export async function fetchData() {
 			const response = await fetch(url + "/latest", {
 				method: "GET", // or "PATCH"
 				headers: {
-					"Accept": "application/json",
-					"X-Master-Key": "$2a$10$VdvVArXAoaUPHq3wzuP2vOlAinRb4M1DAj0VCU07ptQjTvKNqrpZi",
-				
+					Accept: "application/json",
+					"X-Master-Key":
+						"$2a$10$VdvVArXAoaUPHq3wzuP2vOlAinRb4M1DAj0VCU07ptQjTvKNqrpZi",
 				},
 			});
 			if (!response.ok) {
-			throw new Error(`Response status: ${response.status}`);
+				throw new Error(`Response status: ${response.status}`);
 			}
 
 			const result = await response.json();
@@ -51,22 +48,20 @@ export async function fetchData() {
 			const response = await fetch(url + "/latest", {
 				method: "GET",
 				headers: {
-					"Accept": "application/json",			
+					Accept: "application/json",
 				},
 			});
 			if (!response.ok) {
-			throw new Error(`Response status: ${response.status}`);
+				throw new Error(`Response status: ${response.status}`);
 			}
 
 			const result = await response.json();
 			dataSet = result.record;
 			return formatData(dataSet);
-			
 		} catch (error) {
 			console.error(error.message);
 		}
 	}
-	
 }
 
 function formatData(data) {
@@ -111,16 +106,16 @@ export async function postJSON(data) {
 			const response = await fetch(url, {
 				method: "PUT", // or "PATCH"
 				headers: {
-					"Accept": "application/json",
+					Accept: "application/json",
 					"Content-Type": "application/json",
-					"X-Master-Key": "$2a$10$VdvVArXAoaUPHq3wzuP2vOlAinRb4M1DAj0VCU07ptQjTvKNqrpZi",
-				
+					"X-Master-Key":
+						"$2a$10$VdvVArXAoaUPHq3wzuP2vOlAinRb4M1DAj0VCU07ptQjTvKNqrpZi",
 				},
 				body: JSON.stringify(data),
 			});
-			
+
 			if (!response.ok) {
-			throw new Error(`Response status: ${response.status}`);
+				throw new Error(`Response status: ${response.status}`);
 			}
 
 			//get updated data back
@@ -128,7 +123,6 @@ export async function postJSON(data) {
 			dataSet = result.record;
 			console.log("fadfds", dataSet);
 			return formatData(dataSet);
-			
 		} catch (error) {
 			console.error(error.message);
 		}
@@ -137,15 +131,14 @@ export async function postJSON(data) {
 			const response = await fetch(url, {
 				method: "PUT", // or "PATCH"
 				headers: {
-					"Accept": "application/json",
+					Accept: "application/json",
 					"Content-Type": "application/json",
-				
 				},
 				body: JSON.stringify(data),
 			});
-			
+
 			if (!response.ok) {
-			throw new Error(`Response status: ${response.status}`);
+				throw new Error(`Response status: ${response.status}`);
 			}
 
 			//get updated data back
@@ -153,7 +146,6 @@ export async function postJSON(data) {
 			dataSet = result.record;
 			console.log("fadfds", dataSet);
 			return formatData(dataSet);
-			
 		} catch (error) {
 			console.error(error.message);
 		}

@@ -2,10 +2,7 @@
 import "./styles.css";
 import "../node_modules/modern-normalize";
 import { BasicListing, AdvListing } from "./listData.js";
-import {
-	fetchData,
-	postJSON,
-} from "./manageData.js";
+import { fetchData, postJSON } from "./manageData.js";
 
 const basicMenu = document.getElementById("basicMenu");
 const basicMenuTitle = document.getElementById("basicMenuTitle");
@@ -13,7 +10,7 @@ const basicMenuForm = document.getElementById("basicMenuForm");
 const basicListingNameField = document.getElementById("basicListingName");
 const basicSubmit = document.getElementById("basicSubmit");
 const basicEdit = document.getElementById("basicEdit");
-
+const basicCancel = document.getElementById("basicCancel");
 
 const advMenu = document.getElementById("advMenu");
 const advMenuTitle = document.getElementById("advMenuTitle");
@@ -23,13 +20,13 @@ const advListingDescField = document.getElementById("advListingDesc");
 const advListingStatusField = document.getElementById("advListingStatus");
 const advSubmit = document.getElementById("advSubmit");
 const advEdit = document.getElementById("advEdit");
+const advCancel = document.getElementById("advCancel");
 
 const showDeletedButton = document.getElementById("showDeleted");
 const refreshButton = document.getElementById("refresh");
 const searchButton = document.getElementById("search");
 const searchBar = document.getElementById("searchBar");
 
-const saveDataButton = document.getElementById("saveData");
 
 const lv1List = document.getElementById("lv1List");
 const lv2List = document.getElementById("lv2List");
@@ -47,9 +44,6 @@ let selectedLvl2 = null;
 let selectedLvl3 = null;
 
 let selectedLevel = 1;
-
-
-
 
 //Initial load
 
@@ -69,9 +63,16 @@ async function refreshData() {
 	console.log("Data has been re-imported! ", dataSet);
 }
 
-
 searchBar.addEventListener("keydown", findIndex);
 searchButton.addEventListener("click", findIndex);
+
+basicCancel.addEventListener("click", function () {
+	basicMenu.close("cancel");
+});
+
+advCancel.addEventListener("click", function () {
+	advMenu.close();
+});
 
 lv1List.addEventListener("click", function () {
 	selectedLevel = 1;
@@ -93,19 +94,17 @@ refreshButton.addEventListener("click", async function () {
 	updateDOM();
 });
 
-
 advSubmit.addEventListener("click", function () {
 	if (advListingNameField.value.trim() === "") {
 		advListingNameField.setCustomValidity("Name cannot be empty.");
 		advListingNameField.reportValidity();
 		return;
-	}
-	else {
+	} else {
 		advListingNameField.setCustomValidity("");
 		addNewAdvListing(
-		advListingNameField.value,
-		advListingDescField.value,
-		advListingStatusField.value,
+			advListingNameField.value,
+			advListingDescField.value,
+			advListingStatusField.value,
 		);
 		advMenu.close();
 	}
@@ -116,8 +115,7 @@ basicSubmit.addEventListener("click", function () {
 		basicListingNameField.setCustomValidity("Name cannot be empty.");
 		basicListingNameField.reportValidity();
 		return;
-	}
-	else {
+	} else {
 		basicListingNameField.setCustomValidity("");
 		addNewBasicListing(basicListingNameField.value);
 		basicMenu.close();
@@ -129,8 +127,7 @@ basicEdit.addEventListener("click", function () {
 		basicListingNameField.setCustomValidity("Name cannot be empty.");
 		basicListingNameField.reportValidity();
 		return;
-	}
-	else {
+	} else {
 		basicListingNameField.setCustomValidity("");
 		editBasicListing(basicListingNameField.value);
 		basicMenu.close();
@@ -142,22 +139,24 @@ advEdit.addEventListener("click", function () {
 		advListingNameField.setCustomValidity("Name cannot be empty.");
 		advListingNameField.reportValidity();
 		return;
-	}
-	else {
+	} else {
 		advListingNameField.setCustomValidity("");
 		editAdvListing(
-		advListingNameField.value,
-		advListingDescField.value,
-		advListingStatusField.value,
+			advListingNameField.value,
+			advListingDescField.value,
+			advListingStatusField.value,
 		);
 		advMenu.close();
 	}
 });
 
 async function addNewBasicListing(name) {
-	await refreshData()
+	await refreshData();
 	if (selectedLevel == 1) {
-		const newBasicListing = new BasicListing(name, dataSet.listings.length + 1);
+		const newBasicListing = new BasicListing(
+			name,
+			dataSet.listings.length + 1,
+		);
 		dataSet.addListing(newBasicListing);
 		selectedLvl1 = findLastUndeletedLvl1();
 		selectedLvl2 = null;
@@ -178,10 +177,11 @@ async function addNewBasicListing(name) {
 }
 
 async function addNewAdvListing(name, description, status) {
-	await refreshData() 
+	await refreshData();
 	const newAdvListing = new AdvListing(
 		name,
-		dataSet.listings[selectedLvl1].listings[selectedLvl2].listings.length + 1,
+		dataSet.listings[selectedLvl1].listings[selectedLvl2].listings.length +
+			1,
 		description,
 		status,
 	);
@@ -195,7 +195,7 @@ async function addNewAdvListing(name, description, status) {
 }
 
 async function editBasicListing(newName) {
-	await refreshData() 
+	await refreshData();
 	if (selectedLevel == 1) {
 		dataSet.listings[selectedLvl1].editName(newName);
 	} else if (selectedLevel == 2) {
@@ -207,7 +207,7 @@ async function editBasicListing(newName) {
 }
 
 async function editAdvListing(newName, newDesc, newStatus) {
-	await refreshData() 
+	await refreshData();
 	dataSet.listings[selectedLvl1].listings[selectedLvl2].listings[
 		selectedLvl3
 	].editTask(newName, newDesc, newStatus);
@@ -490,10 +490,7 @@ function createListing(listingItem) {
 	});
 
 	deleteIcon.addEventListener("click", async function (event) {
-		if (
-			confirm(`Are you sure?`)
-			
-		) {
+		if (confirm(`Are you sure?`)) {
 			if (listingItem.isDeleted) {
 				console.log("Deleted item:", listingItem.name);
 				if (selectedLevel == 1) {
@@ -508,8 +505,8 @@ function createListing(listingItem) {
 				}
 			}
 			toggleDeleteThis(listingItem);
+			event.stopPropagation();
 		}
-		
 	});
 
 	return listingBox;
@@ -540,24 +537,30 @@ function createAddListingBox(level) {
 
 function findIndex(event) {
 	if (event.key == "Enter" || event.button == 0) {
-		console.log(event.button)
+		console.log(event.button);
 		event.preventDefault();
 		console.log("Searching for index:", searchBar.value);
 		if (searchBar.validity.patternMismatch) {
-			alert("Invalid index format. Please use XX-XX-XX format.");		
+			alert("Invalid index format. Please use XX-XX-XX format.");
 		} else {
-		const indexParts = searchBar.value.split("-");
-		selectedLevel = 3;
-		if ((dataSet.listings[parseInt(indexParts[0]) - 1] != undefined) && (dataSet.listings[parseInt(indexParts[0]) - 1].listings[parseInt(indexParts[1]) - 1] != undefined) && (dataSet.listings[parseInt(indexParts[0]) - 1].listings[parseInt(indexParts[1]) - 1].listings[parseInt(indexParts[2]) - 1] != undefined)) {
-			console.log("Found it!");
-			selectedLvl1= parseInt(indexParts[0]) - 1;
-			selectedLvl2 = parseInt(indexParts[1]) - 1;
-			selectedLvl3 = parseInt(indexParts[2]) - 1;
-		}
-		else alert("Index not found");
-		
-		updateDOM();
+			const indexParts = searchBar.value.split("-");
+			selectedLevel = 3;
+			if (
+				dataSet.listings[parseInt(indexParts[0]) - 1] != undefined &&
+				dataSet.listings[parseInt(indexParts[0]) - 1].listings[
+					parseInt(indexParts[1]) - 1
+				] != undefined &&
+				dataSet.listings[parseInt(indexParts[0]) - 1].listings[
+					parseInt(indexParts[1]) - 1
+				].listings[parseInt(indexParts[2]) - 1] != undefined
+			) {
+				console.log("Found it!");
+				selectedLvl1 = parseInt(indexParts[0]) - 1;
+				selectedLvl2 = parseInt(indexParts[1]) - 1;
+				selectedLvl3 = parseInt(indexParts[2]) - 1;
+			} else alert("Index not found");
+
+			updateDOM();
 		}
 	}
-	
 }

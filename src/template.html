@@ -44,11 +44,17 @@
 			</div>
 			<div class="settings">
 				<h3>Settings:</h3>
-				<input type="text" pattern = "([0-9]){2,3}-([0-9]){2,3}-([0-9]){2,3}$" placeholder="XX-XX-XX" id="searchBar" name="searchBar" />
+				<input
+					type="text"
+					pattern="([0-9]){2,3}-([0-9]){2,3}-([0-9]){2,3}$"
+					placeholder="XX-XX-XX"
+					id="searchBar"
+					name="searchBar"
+				/>
 				<button id="search">Search</button>
 				<label for="showDeleted">Show Deleted:</label>
-				<input type="checkbox" id="showDeleted" name="showDeleted">
-                <button id="refresh">Refresh Data</button>
+				<input type="checkbox" id="showDeleted" name="showDeleted" />
+				<button id="refresh">Refresh Data</button>
 			</div>
 		</div>
 		<dialog id="basicMenu">
@@ -63,6 +69,7 @@
 				/>
 				<button id="basicSubmit" type="button">Create Listing</button>
 				<button id="basicEdit" type="button">Save Listing</button>
+				<button id="basicCancel">Cancel</button>
 			</form>
 		</dialog>
 
@@ -90,6 +97,7 @@
 				</select>
 				<button id="advSubmit" type="button">Create Listing</button>
 				<button id="advEdit" type="button">Save Listing</button>
+				<button id="advCancel">Cancel</button>
 			</form>
 		</dialog>
 
@@ -97,7 +105,8 @@
 			<span
 				>Created by Adam Haouam -<a href="https://github.com/adamhaouam"
 					>GitHub Page</a
-				></span>
+				></span
+			>
 		</footer>
 	</body>
 </html>

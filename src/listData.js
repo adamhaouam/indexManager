@@ -15,7 +15,14 @@ class Listing {
 	}
 
 	toggleDelete() {
-		console.log("Toggling delete status for entry: " + this.name + " from " + this.isDeleted + " to " + !this.isDeleted);
+		console.log(
+			"Toggling delete status for entry: " +
+				this.name +
+				" from " +
+				this.isDeleted +
+				" to " +
+				!this.isDeleted,
+		);
 		this.isDeleted = !this.isDeleted;
 		console.log(this.name, " new isDeleted status: ", this.isDeleted);
 	}
