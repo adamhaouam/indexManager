@@ -2,7 +2,7 @@
 import "./styles.css";
 import "../node_modules/modern-normalize";
 import { BasicListing, AdvListing } from "./listData.js";
-import { fetchData, postJSON } from "./manageData.js";
+import { fetchData, postJSON, getDataState } from "./manageData.js";
 
 const basicMenu = document.getElementById("basicMenu");
 const basicMenuTitle = document.getElementById("basicMenuTitle");
@@ -27,7 +27,7 @@ const refreshButton = document.getElementById("refresh");
 const searchButton = document.getElementById("search");
 const searchBar = document.getElementById("searchBar");
 
-
+const mainTitle = document.getElementById("mainTitle");
 const lv1List = document.getElementById("lv1List");
 const lv2List = document.getElementById("lv2List");
 const lv3List = document.getElementById("lv3List");
@@ -48,6 +48,14 @@ let selectedLevel = 1;
 //Initial load
 
 loadPage();
+
+const dataState = getDataState();
+if (dataState == "prod") {
+	mainTitle.textContent = "Index Manager (Production)";
+} else {
+	mainTitle.textContent = "Index Manager (Development)";
+}
+
 
 async function loadPage() {
 	//dataSet = getLocalData();

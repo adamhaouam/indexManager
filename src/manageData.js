@@ -25,6 +25,10 @@ if (apiKey != "" && apiKey !== null && apiKey !== undefined) {
 
 let dataSet;
 
+export function getDataState() {
+	return dataState;
+}
+
 export async function fetchData() {
 	if (dataState == "prod") {
 		try {
