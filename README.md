@@ -2,13 +2,10 @@
 
 Index Manager
 
-Site to manage items and their current progress
-Used both as a progress system and an file indexing system
-Generates a naming convention for naming files as well as a search function by copying said naming convention
+This is a website created using WebPack for managing projects whilst incorporating an indexing system in order to create and search for index codes as a filing system for files on a local database.
 
-Preview: https://adamhaouam.github.io/indexManager/
+As to accomodate for GitHub pages static pages, instead of using a local database, an API is used to pull and push changes made to the object through a JSON file.
 
-TODO:
-Add cancel button to forms
-Add index search
-Add restrictions to forms and searchbar
+Link to page: https://adamhaouam.github.io/indexManager/
+
+
