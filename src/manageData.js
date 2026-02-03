@@ -7,6 +7,7 @@ console.log(apiKey, "is the master key provided.");
 
 //if !apiKey variable use public api else use private api with master key
 let url;
+let dataState = "";
 
 // if (dataState) {
 // 	console.log("Data state from env is:", dataState);
@@ -16,24 +17,28 @@ let url;
 // }
 if (apiKey != "" && apiKey !== null && apiKey !== undefined) {
 	url = "https://api.jsonbin.io/v3/b/697ebec7d0ea881f4097c4ea"; //private api with master key
+	dataState = "prod"
 } else {
 	url = "https://api.jsonbin.io/v3/b/697ebf1843b1c97be95c5938"; //public api
+	dataState = "dev"
 }
 
 let dataSet;
 
 export async function fetchData() {
-	if (apiKey) {
+	if (dataState == "prod") {
 		try {
 			const response = await fetch(url + "/latest", {
 				method: "GET", // or "PATCH"
 				headers: {
 					Accept: "application/json",
-					"X-Master-Key":
-						"$2a$10$VdvVArXAoaUPHq3wzuP2vOlAinRb4M1DAj0VCU07ptQjTvKNqrpZi",
+					"X-Access-Key":
+						apiKey,
 				},
 			});
 			if (!response.ok) {
+				url = "https://api.jsonbin.io/v3/b/697ebf1843b1c97be95c5938";
+				dataState = "dev";
 				throw new Error(`Response status: ${response.status}`);
 			}
 
@@ -43,7 +48,8 @@ export async function fetchData() {
 		} catch (error) {
 			console.error(error.message);
 		}
-	} else {
+	} 
+	if (dataState == "dev") {
 		try {
 			const response = await fetch(url + "/latest", {
 				method: "GET",
@@ -101,15 +107,15 @@ function formatData(data) {
 }
 
 export async function postJSON(data) {
-	if (apiKey) {
+	if (dataState == "prod") {
 		try {
 			const response = await fetch(url, {
 				method: "PUT", // or "PATCH"
 				headers: {
 					Accept: "application/json",
 					"Content-Type": "application/json",
-					"X-Master-Key":
-						"$2a$10$VdvVArXAoaUPHq3wzuP2vOlAinRb4M1DAj0VCU07ptQjTvKNqrpZi",
+					"X-Access-Key":
+						apiKey,
 				},
 				body: JSON.stringify(data),
 			});
